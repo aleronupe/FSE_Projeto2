@@ -1,0 +1,25 @@
+CC = gcc
+LDFLAGS = -lncurses -lpthread
+BLDDIR = .
+INCDIR = $(BLDDIR)/inc
+SRCDIR = $(BLDDIR)/src
+OBJDIR = $(BLDDIR)/obj
+CFLAGS = -c -Wall -lpthread -lncurses -I$(INCDIR)
+SRC = $(wildcard $(SRCDIR)/*.c)
+OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+EXE = bin/bin
+
+all: clean $(EXE) 
+    
+$(EXE): $(OBJ) 
+	$(CC) $(LDFLAGS) $(OBJDIR)/*.o -o $@ -lncurses 
+
+$(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $< -o $@ -lncurses 
+
+clean:
+	-rm -f $(OBJDIR)/*.o $(EXE)
+
+run:
+	@$(EXE)
