@@ -1,27 +1,97 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <pthread.h>
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <unistd.h>
-#include <pthread.h>
-#include "menu.h"
 
-Arg_Struct main_struct;
+#include "painel.h"
+#include "structures.h"
 
-void mata_threads()
-{
-    main_struct.flag_run = 0;
+Servidor_Struct servStruct;
+
+void mata_threads() {
+    printf("Matou o processo\n");
+    servStruct.flag_run = 0;
+    exit(0);
 }
 
-int main(int argc, const char *argv[])
-{
+int main(int argc, const char *argv[]) {
     signal(SIGINT, mata_threads);
     signal(SIGKILL, mata_threads);
 
-    iniciaTelas();
+    servStruct.flag_run = 1;
+    servStruct.lamp1 = 0;
+    servStruct.lamp2 = 0;
+    servStruct.lamp3 = 0;
+    servStruct.lamp4 = 0;
+    servStruct.ar1 = 0;
+    servStruct.ar2 = 0;
+    // ---------------
+    servStruct.alarme = 0;
+    servStruct.sinalAlarme = 0;
+    // ----------------
+    servStruct.sensorPres1 = 0;
+    servStruct.sensorPres2 = 0;
+    servStruct.sensorAbrt1 = 0;
+    servStruct.sensorAbrt2 = 0;
+    servStruct.sensorAbrt3 = 0;
+    servStruct.sensorAbrt4 = 0;
+    servStruct.sensorAbrt5 = 0;
+    servStruct.sensorAbrt6 = 0;
 
-    opcoes_usuario(&main_struct);
+    pthread_t menu_tid;
+
+    pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void *)&servStruct);
+
+    int alter = 1;
+
+    while (servStruct.flag_run == 1) {
+        sleep(2);
+        if (alter == 1) {
+            servStruct.lamp1 = 1;
+            servStruct.lamp2 = 1;
+            servStruct.lamp3 = 1;
+            servStruct.lamp4 = 1;
+            servStruct.ar1 = 0;
+            servStruct.ar2 = 0;
+            // ----------
+            servStruct.alarme = 0;
+            servStruct.sinalAlarme = 1;
+            // ----------
+            servStruct.sensorPres1 = 0;
+            servStruct.sensorPres2 = 0;
+            servStruct.sensorAbrt1 = 1;
+            servStruct.sensorAbrt2 = 1;
+            servStruct.sensorAbrt3 = 1;
+            servStruct.sensorAbrt4 = 1;
+            servStruct.sensorAbrt5 = 1;
+            servStruct.sensorAbrt6 = 1;
+        } else {
+            servStruct.lamp1 = 0;
+            servStruct.lamp2 = 0;
+            servStruct.lamp3 = 0;
+            servStruct.lamp4 = 0;
+            servStruct.ar1 = 1;
+            servStruct.ar2 = 1;
+            // ----------
+            servStruct.alarme = 1;
+            servStruct.sinalAlarme = 0;
+            // ----------
+            servStruct.sensorPres1 = 1;
+            servStruct.sensorPres2 = 1;
+            servStruct.sensorAbrt1 = 0;
+            servStruct.sensorAbrt2 = 0;
+            servStruct.sensorAbrt3 = 0;
+            servStruct.sensorAbrt4 = 0;
+            servStruct.sensorAbrt5 = 0;
+            servStruct.sensorAbrt6 = 0;
+        }
+        alter = alter * (-1);
+    }
+
+    pthread_join(menu_tid, NULL);
 
     return 0;
 }
