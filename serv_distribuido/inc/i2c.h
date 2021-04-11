@@ -1,6 +1,13 @@
 #ifndef I2C_H_
 #define I2C_H_
 
+#include <stdio.h>
+#include <string.h>
+#include <linux/i2c-dev.h> //Used for I2C
+#include <sys/ioctl.h>     //Used for I2C
+#include <stdlib.h>
+#include "bme280.h"
+
 /* Structure that contains identifier details used in example */
 struct identifier
 {
@@ -118,6 +125,6 @@ void configura_bme280_i2c(struct bme280_dev *dev);
  * @param[in] temp_amb   :   Pointer to structure that keeps environment temperature.
  *
  */
-double le_temp_bme280_i2c(struct bme280_dev *dev);
+void le_temp_bme280_i2c(struct bme280_dev *dev, double *temp, double *hum);
 
 #endif /* I2C_H_ */

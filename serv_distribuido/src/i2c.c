@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>  //Used for UART
-#include <fcntl.h>   //Used for UART
-#include <termios.h> //Used for UART
-#include <string.h>
-#include <linux/i2c-dev.h> //Used for I2C
-#include <sys/ioctl.h>     //Used for I2C
-#include <stdlib.h>
-#include "../inc/crc16.h"
-#include "../inc/bme280.h"
-#include "../inc/i2c.h"
+#include "i2c.h"
 
 /*!
  *  @brief Function for reading the sensor's registers through I2C bus.
@@ -176,10 +166,8 @@ void configura_bme280_i2c(struct bme280_dev *dev)
 /*!
  * @brief This function start the read of the I2C connection
  */
-double le_temp_bme280_i2c(struct bme280_dev *dev)
+void le_temp_bme280_i2c(struct bme280_dev *dev, double *temp, double *hum)
 {
-    double temp_amb;
-
     /* Variable to define the result */
     int8_t rslt = BME280_OK;
 
@@ -211,7 +199,7 @@ double le_temp_bme280_i2c(struct bme280_dev *dev)
     {
         fprintf(stderr, "Failed to get sensor data (code %+d).", rslt);
     }
-    temp_amb = comp_data.temperature;
+    *temp = comp_data.temperature;
+    *hum = comp_data.humidity;
     // print_sensor_data(&comp_data);
-    return temp_amb;
 }
