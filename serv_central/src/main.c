@@ -32,6 +32,9 @@ int main(int argc, const char *argv[]) {
     servStruct.alarme = 0;
     servStruct.sinalAlarme = 0;
     // ----------------
+    servStruct.temp = 20.00;
+    servStruct.hum = 10.00;
+    // ----------------
     servStruct.sensorPres1 = 0;
     servStruct.sensorPres2 = 0;
     servStruct.sensorAbrt1 = 0;
@@ -60,6 +63,9 @@ int main(int argc, const char *argv[]) {
             servStruct.alarme = 0;
             servStruct.sinalAlarme = 1;
             // ----------
+            servStruct.temp = 20.00;
+            servStruct.hum = 10.00;
+            // ----------
             servStruct.sensorPres1 = 0;
             servStruct.sensorPres2 = 0;
             servStruct.sensorAbrt1 = 1;
@@ -78,6 +84,9 @@ int main(int argc, const char *argv[]) {
             // ----------
             servStruct.alarme = 1;
             servStruct.sinalAlarme = 0;
+            // ----------
+            servStruct.temp = 10.00;
+            servStruct.hum = 20.00;
             // ----------
             servStruct.sensorPres1 = 1;
             servStruct.sensorPres2 = 1;

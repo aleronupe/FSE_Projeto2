@@ -37,7 +37,7 @@ char *defineLigadoDesligado(int estado) {
     return "Desligado";
 }
 
-void criaWindowEstadoSensores() {
+void pintaWindowEstadoSensores() {
     char listaSensores[8][50] = {
         "Sensor de Presenca 01 (Sala):------------OFF",
         "Sensor de Presenca 02 (Cozinha):---------OFF",
@@ -48,7 +48,6 @@ void criaWindowEstadoSensores() {
         "Sensor Abertura 05 (Janela Quarto 01):---OFF",
         "Sensor Abertura 06 (Janela Quarto 02):---OFF"};
     char item[50];
-    windowEstadoSensores = newwin(12, 55, 1, 52);
     box(windowEstadoSensores, 0, 0);
     mvwprintw(windowEstadoSensores, 0, 2, " Painel de Sensores ");
 
@@ -58,7 +57,7 @@ void criaWindowEstadoSensores() {
     }
 }
 
-void criaWindowEstadoEntradas() {
+void pintaWindowEstadoEntradas() {
     char listaEntradas[6][50] = {"Lampada 01 (Cozinha):-------------OFF",
                                  "Lampada 02 (Sala):----------------OFF",
                                  "Lampada 03 (Quarto 01):-----------OFF",
@@ -66,7 +65,6 @@ void criaWindowEstadoEntradas() {
                                  "Ar-Condicionado 01 (Quarto 01):---OFF",
                                  "Ar-Condicionado 02 (Quarto 02):---OFF"};
     char item[50];
-    windowEstadoEntradas = newwin(12, 50, 1, 1);
     box(windowEstadoEntradas, 0, 0);
     mvwprintw(windowEstadoEntradas, 0, 2, " Painel de Controle ");
 
@@ -76,17 +74,29 @@ void criaWindowEstadoEntradas() {
     }
 }
 
-void criaWindowEstadoAlarme() {
+void pintaWindowEstadoAlarme() {
     char listaAlarme[2][30] = {"Alarme:------------Desligado",
                                "Sinal do Alarme:-----Inativo"};
     char item[30];
-    windowEstadoAlarme = newwin(6, 32, 13, 1);
     box(windowEstadoAlarme, 0, 0);
     mvwprintw(windowEstadoAlarme, 0, 2, " Alarme ");
 
     for (int i = 0; i < 2; i++) {
         sprintf(item, "%s", listaAlarme[i]);
         mvwprintw(windowEstadoAlarme, i + 2, 2, "%s", item);
+    }
+}
+
+void pintaWindowTempUmidade() {
+    char listaAlarme[2][30] = {"Umidade:-------0.00 lf",
+                               "Temperatura:---0.00 °C"};
+    char item[30];
+    box(windowTempUmd, 0, 0);
+    mvwprintw(windowTempUmd, 0, 2, " Temperatura e Umidade ");
+
+    for (int i = 0; i < 2; i++) {
+        sprintf(item, "%s", listaAlarme[i]);
+        mvwprintw(windowTempUmd, i + 2, 2, "%s", item);
     }
 }
 
@@ -109,7 +119,6 @@ void atualizaWindowEstadoSensores(Servidor_Struct *servStruct) {
               defineOnOff(servStruct->sensorAbrt6));
 
     wrefresh(windowEstadoSensores);  // update the terminal screen
-    sleep(1);
 }
 
 void atualizaWindowEstadoEntradas(Servidor_Struct *servStruct) {
@@ -125,7 +134,6 @@ void atualizaWindowEstadoEntradas(Servidor_Struct *servStruct) {
     mvwprintw(windowEstadoEntradas, 8, 36, "%s", defineOnOff(servStruct->ar2));
 
     wrefresh(windowEstadoEntradas);  // update the terminal screen
-    sleep(1);
 }
 
 void atualizaWindowEstadoAlarme(Servidor_Struct *servStruct) {
@@ -135,23 +143,40 @@ void atualizaWindowEstadoAlarme(Servidor_Struct *servStruct) {
               defineAtivoInativo(servStruct->sinalAlarme));
 
     wrefresh(windowEstadoAlarme);  // update the terminal screen
-    sleep(1);
+}
+
+void atualizaWindowTempUmidade(Servidor_Struct *servStruct) {
+    mvwprintw(windowTempUmd, 2, 16, "%.2f", servStruct->hum);
+    mvwprintw(windowTempUmd, 3, 16, "%.2f", servStruct->temp);
+
+    wrefresh(windowTempUmd);  // update the terminal screen
 }
 
 void carregaMenu(void *args) {
     Servidor_Struct *servStruct = (Servidor_Struct *)args;
     iniciaTela();
-    criaWindowEstadoEntradas();
-    criaWindowEstadoSensores();
-    criaWindowEstadoAlarme();
+
+    windowEstadoEntradas = newwin(12, 50, 1, 1);
+    windowEstadoSensores = newwin(12, 55, 1, 52);
+    windowEstadoAlarme = newwin(6, 32, 13, 1);
+    windowTempUmd = newwin(6, 32, 19, 1);
+
     while (servStruct->flag_run) {
+        pintaWindowEstadoEntradas();
+        pintaWindowEstadoSensores();
+        pintaWindowEstadoAlarme();
+        pintaWindowTempUmidade();
+
         atualizaWindowEstadoEntradas(servStruct);
         atualizaWindowEstadoSensores(servStruct);
         atualizaWindowEstadoAlarme(servStruct);
+        atualizaWindowTempUmidade(servStruct);
+        sleep(1);
     }
-    wclear(windowEstadoEntradas);
-    wclear(windowEstadoSensores);
-    wclear(windowEstadoAlarme);
+    delwin(windowEstadoEntradas);
+    delwin(windowEstadoSensores);
+    delwin(windowEstadoAlarme);
+    delwin(windowTempUmd);
     echo();
     nocbreak();
     endwin();

@@ -10,6 +10,7 @@ typedef struct servidor_struct
     int sensorAbrt1, sensorAbrt2, sensorAbrt3;
     int sensorAbrt4, sensorAbrt5, sensorAbrt6;
     int alarme, sinalAlarme;
+    float temp, hum;
 
 } Servidor_Struct;
 
