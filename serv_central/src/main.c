@@ -14,6 +14,8 @@ Servidor_Struct servStruct;
 void mata_threads() {
     printf("Matou o processo\n");
     servStruct.flag_run = 0;
+    sleep(2);
+    desliga_telas();
     exit(0);
 }
 
@@ -43,6 +45,8 @@ int main(int argc, const char *argv[]) {
     servStruct.sensorAbrt4 = 0;
     servStruct.sensorAbrt5 = 0;
     servStruct.sensorAbrt6 = 0;
+
+    iniciaTela();
 
     pthread_t menu_tid;
 

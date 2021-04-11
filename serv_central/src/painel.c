@@ -1,10 +1,13 @@
 #include "painel.h"
 
+#include <pthread.h>
+
 #include "structures.h"
 
 WINDOW *windowTempUmd, *windowEstadoAlarme;
 WINDOW *windowEstadoSensores, *windowEstadoEntradas;
-WINDOW *windowControleEntradas, *windowControleAlarme;
+WINDOW *windowControleEntradas;
+int pos = 0;
 
 void iniciaTela() {
     initscr();
@@ -14,6 +17,7 @@ void iniciaTela() {
     cbreak();
     curs_set(0);
     keypad(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
 }
 
 char *defineOnOff(int estado) {
@@ -38,15 +42,14 @@ char *defineLigadoDesligado(int estado) {
 }
 
 void pintaWindowEstadoSensores() {
-    char listaSensores[8][50] = {
-        "Sensor de Presenca 01 (Sala):------------OFF",
-        "Sensor de Presenca 02 (Cozinha):---------OFF",
-        "Sensor Abertura 01 (Porta Cozinha):------OFF",
-        "Sensor Abertura 02 (Janela Cozinha):-----OFF",
-        "Sensor Abertura 03 (Porta Sala):---------OFF",
-        "Sensor Abertura 04 (Janela Sala):--------OFF",
-        "Sensor Abertura 05 (Janela Quarto 01):---OFF",
-        "Sensor Abertura 06 (Janela Quarto 02):---OFF"};
+    char listaSensores[8][50] = {"Sensor de Presenca 01 (Sala):------------",
+                                 "Sensor de Presenca 02 (Cozinha):---------",
+                                 "Sensor Abertura 01 (Porta Cozinha):------",
+                                 "Sensor Abertura 02 (Janela Cozinha):-----",
+                                 "Sensor Abertura 03 (Porta Sala):---------",
+                                 "Sensor Abertura 04 (Janela Sala):--------",
+                                 "Sensor Abertura 05 (Janela Quarto 01):---",
+                                 "Sensor Abertura 06 (Janela Quarto 02):---"};
     char item[50];
     box(windowEstadoSensores, 0, 0);
     mvwprintw(windowEstadoSensores, 0, 2, " Painel de Sensores ");
@@ -58,15 +61,15 @@ void pintaWindowEstadoSensores() {
 }
 
 void pintaWindowEstadoEntradas() {
-    char listaEntradas[6][50] = {"Lampada 01 (Cozinha):-------------OFF",
-                                 "Lampada 02 (Sala):----------------OFF",
-                                 "Lampada 03 (Quarto 01):-----------OFF",
-                                 "Lampada 04 (Quarto 02):-----------OFF",
-                                 "Ar-Condicionado 01 (Quarto 01):---OFF",
-                                 "Ar-Condicionado 02 (Quarto 02):---OFF"};
+    char listaEntradas[6][50] = {"Lampada 01 (Cozinha):-------------",
+                                 "Lampada 02 (Sala):----------------",
+                                 "Lampada 03 (Quarto 01):-----------",
+                                 "Lampada 04 (Quarto 02):-----------",
+                                 "Ar-Condicionado 01 (Quarto 01):---",
+                                 "Ar-Condicionado 02 (Quarto 02):---"};
     char item[50];
     box(windowEstadoEntradas, 0, 0);
-    mvwprintw(windowEstadoEntradas, 0, 2, " Painel de Controle ");
+    mvwprintw(windowEstadoEntradas, 0, 2, " Painel de Luzes/Ar-Condicionado ");
 
     for (int i = 0; i < 6; i++) {
         sprintf(item, "%s", listaEntradas[i]);
@@ -75,8 +78,7 @@ void pintaWindowEstadoEntradas() {
 }
 
 void pintaWindowEstadoAlarme() {
-    char listaAlarme[2][30] = {"Alarme:------------Desligado",
-                               "Sinal do Alarme:-----Inativo"};
+    char listaAlarme[2][30] = {"Alarme:------------", "Sinal do Alarme:-----"};
     char item[30];
     box(windowEstadoAlarme, 0, 0);
     mvwprintw(windowEstadoAlarme, 0, 2, " Alarme ");
@@ -88,8 +90,7 @@ void pintaWindowEstadoAlarme() {
 }
 
 void pintaWindowTempUmidade() {
-    char listaAlarme[2][30] = {"Umidade:-------0.00 lf",
-                               "Temperatura:---0.00 °C"};
+    char listaAlarme[2][30] = {"Umidade:-------", "Temperatura:---"};
     char item[30];
     box(windowTempUmd, 0, 0);
     mvwprintw(windowTempUmd, 0, 2, " Temperatura e Umidade ");
@@ -98,6 +99,31 @@ void pintaWindowTempUmidade() {
         sprintf(item, "%s", listaAlarme[i]);
         mvwprintw(windowTempUmd, i + 2, 2, "%s", item);
     }
+}
+
+void pintaWindowControleEntrada() {
+    char listaEntradas[8][40] = {"Lampada 01 (Cozinha):-------------",
+                                 "Lampada 02 (Sala):----------------",
+                                 "Lampada 03 (Quarto 01):-----------",
+                                 "Lampada 04 (Quarto 02):-----------",
+                                 "Ar-Condicionado 01 (Quarto 01):---",
+                                 "Ar-Condicionado 02 (Quarto 02):---",
+                                 "Alarme:---------------------------",
+                                 "Sair"};
+    int i = 0;
+    char item[40];
+    box(windowControleEntradas, 0, 0);
+    // now print all the menu items and highlight the first one
+    for (i = 0; i < 8; i++) {
+        if (i == pos)
+            wattron(windowControleEntradas,
+                    A_STANDOUT);  // highlights the first item.
+        else
+            wattroff(windowControleEntradas, A_STANDOUT);
+        sprintf(item, "%s", listaEntradas[i]);
+        mvwprintw(windowControleEntradas, i + 2, 2, "%s", item);
+    }
+    wrefresh(windowControleEntradas);  // update the terminal screen
 }
 
 void atualizaWindowEstadoSensores(Servidor_Struct *servStruct) {
@@ -152,88 +178,91 @@ void atualizaWindowTempUmidade(Servidor_Struct *servStruct) {
     wrefresh(windowTempUmd);  // update the terminal screen
 }
 
+void atualizaInput(Servidor_Struct *servStruct) {
+    char listaEntradas[8][40] = {"Lampada 01 (Cozinha):-------------",
+                                 "Lampada 02 (Sala):----------------",
+                                 "Lampada 03 (Quarto 01):-----------",
+                                 "Lampada 04 (Quarto 02):-----------",
+                                 "Ar-Condicionado 01 (Quarto 01):---",
+                                 "Ar-Condicionado 02 (Quarto 02):---",
+                                 "Alarme:---------------------------",
+                                 "Sair"};
+    char item[40];
+    int ch;
+    ch = getch();
+
+    // get the input
+    if (ch != ERR) {
+        // printf("Pegou aqui hein: %d", ch);
+        // sprintf(item, "%s", listaEntradas[pos]);
+        // mvwprintw(windowControleEntradas, pos + 2, 2, "%s", item);
+        // use a variable to increment or decrement the value based on the
+        // input.
+        switch (ch) {
+            case KEY_UP:
+                (pos)--;
+                pos = (pos < 0) ? 7 : pos;
+                break;
+            case KEY_DOWN:
+                (pos)++;
+                pos = (pos > 7) ? 0 : pos;
+                break;
+        }
+        // // now highlight the next item in the list.
+        // wattron(windowControleEntradas, A_STANDOUT);
+
+        // sprintf(item, "%s", listaEntradas[pos]);
+        // mvwprintw(windowControleEntradas, pos + 2, 2, "%s", item);
+        // wattroff(windowControleEntradas, A_STANDOUT);
+    }
+    int i = 0;
+    box(windowControleEntradas, 0, 0);
+    // now print all the menu items and highlight the first one
+    for (i = 0; i < 8; i++) {
+        if (i == pos)
+            wattron(windowControleEntradas,
+                    A_STANDOUT);  // highlights the first item.
+        else
+            wattroff(windowControleEntradas, A_STANDOUT);
+        sprintf(item, "%s", listaEntradas[i]);
+        mvwprintw(windowControleEntradas, i + 2, 2, "%s", item);
+    }
+    wrefresh(windowControleEntradas);  // update the terminal screen
+}
+
 void carregaMenu(void *args) {
     Servidor_Struct *servStruct = (Servidor_Struct *)args;
-    iniciaTela();
-
     windowEstadoEntradas = newwin(12, 50, 1, 1);
     windowEstadoSensores = newwin(12, 55, 1, 52);
     windowEstadoAlarme = newwin(6, 32, 13, 1);
     windowTempUmd = newwin(6, 32, 19, 1);
+    windowControleEntradas = newwin(12, 73, 13, 34);
 
     while (servStruct->flag_run) {
         pintaWindowEstadoEntradas();
         pintaWindowEstadoSensores();
         pintaWindowEstadoAlarme();
         pintaWindowTempUmidade();
+        // pintaWindowControleEntrada();
 
         atualizaWindowEstadoEntradas(servStruct);
         atualizaWindowEstadoSensores(servStruct);
         atualizaWindowEstadoAlarme(servStruct);
         atualizaWindowTempUmidade(servStruct);
+        atualizaInput(servStruct);
         sleep(1);
     }
+
+    // pthread_join(input_tid, NULL);
+}
+
+void desliga_telas() {
     delwin(windowEstadoEntradas);
     delwin(windowEstadoSensores);
     delwin(windowEstadoAlarme);
     delwin(windowTempUmd);
+    delwin(windowControleEntradas);
     echo();
     nocbreak();
     endwin();
-}
-
-void carrega_outro_menu() {
-    // WINDOW *w;
-    // char list[5][7] = {"One", "Two", "Three", "Four", "Five"};
-    // char item[7];
-    // int ch, i = 0, width = 7;
-
-    // initscr();                 // initialize Ncurses
-    // w = newwin(10, 12, 1, 1);  // create a new window
-    // box(w, 0, 0);              // sets default borders for the window
-
-    // // now print all the menu items and highlight the first one
-    // for (i = 0; i < 5; i++) {
-    //     if (i == 0)
-    //         wattron(w, A_STANDOUT);  // highlights the first item.
-    //     else
-    //         wattroff(w, A_STANDOUT);
-    //     sprintf(item, "%-7s", list[i]);
-    //     mvwprintw(w, i + 1, 2, "%s", item);
-    // }
-
-    // wrefresh(w);  // update the terminal screen
-
-    // i = 0;
-    // noecho();         // disable echoing of characters on the screen
-    // keypad(w, TRUE);  // enable keyboard input for the window.
-    // curs_set(0);      // hide the default screen cursor.
-
-    // // get the input
-    // while ((ch = wgetch(w)) != 'q') {
-    //     // right pad with spaces to make the items appear with even width.
-    //     sprintf(item, "%-7s", list[i]);
-    //     mvwprintw(w, i + 1, 2, "%s", item);
-    //     // use a variable to increment or decrement the value based on the
-    //     // input.
-    //     switch (ch) {
-    //         case KEY_UP:
-    //             i--;
-    //             i = (i < 0) ? 4 : i;
-    //             break;
-    //         case KEY_DOWN:
-    //             i++;
-    //             i = (i > 4) ? 0 : i;
-    //             break;
-    //     }
-    //     // now highlight the next item in the list.
-    //     wattron(w, A_STANDOUT);
-
-    //     sprintf(item, "%-7s", list[i]);
-    //     mvwprintw(w, i + 1, 2, "%s", item);
-    //     wattroff(w, A_STANDOUT);
-    // }
-
-    // delwin(w);
-    // endwin();
 }
