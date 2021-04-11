@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "bme280.h"
 #include "gpio.h"
+#include "i2c.h"
 #include "structures.h"
 
 void controle_temp(void *args);

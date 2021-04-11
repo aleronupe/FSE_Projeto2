@@ -1,6 +1,9 @@
 #ifndef I2C_H_
 #define I2C_H_
 
+#include <unistd.h>
+#include <fcntl.h>  
+#include <termios.h>
 #include <stdio.h>
 #include <string.h>
 #include <linux/i2c-dev.h> //Used for I2C

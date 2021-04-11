@@ -11,8 +11,8 @@ void controle_temp(void *args) {
     /* Variáveis do I2C */
     struct bme280_dev dev;
 
-    /* Variáveis do GPIO */
-    int intensity;
+    // /* Variáveis do GPIO */
+    // int intensity;
 
     /************ Configuração ************/
     /* Configuração do I2C */
@@ -21,8 +21,8 @@ void controle_temp(void *args) {
     inicializa_bme280_i2c(&dev);
     configura_bme280_i2c(&dev);
 
-    /* Configuração do GPIO */
-    configura_GPIO();
+    // /* Configuração do GPIO */
+    // configura_GPIO();
 
     while (servStruct->flag_run) {
 
@@ -31,8 +31,6 @@ void controle_temp(void *args) {
         le_temp_bme280_i2c(&dev, &temp, &hum);
         printf("Temperatura: %lf\n", temp);
         printf("Temperatura: %lf\n", hum);
-
-
 
         // /* GPIO */
         // intensity = sinal_controle;
