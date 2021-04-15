@@ -25,8 +25,8 @@ void configura_GPIO() {
     pinMode(PWM_PIN_LAMP_03, OUTPUT);
     softPwmCreate(PWM_PIN_LAMP_03, 1, 100);
 
-    pinMode(PWM_PIN_LAMP_03, OUTPUT);
-    softPwmCreate(PWM_PIN_LAMP_03, 1, 100);
+    pinMode(PWM_PIN_LAMP_04, OUTPUT);
+    softPwmCreate(PWM_PIN_LAMP_04, 1, 100);
 
     // Configura Ar-Condicionado
     pinMode(PWM_PIN_AR_01, OUTPUT);
