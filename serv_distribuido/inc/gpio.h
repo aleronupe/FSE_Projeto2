@@ -3,7 +3,17 @@
 
 void configura_GPIO();
 
-void ativa_circuito_de_potencia(int intensity);
+void liga_desliga_lamp_1(int estado);
+
+void liga_desliga_lamp_2(int estado);
+
+void liga_desliga_lamp_3(int estado);
+
+void liga_desliga_lamp_4(int estado);
+
+void liga_desliga_ar_1(int estado);
+
+void liga_desliga_ar_2(int estado);
 
 void desativa_circuito_de_potencia();
 

@@ -1,47 +1,113 @@
-#include <wiringPi.h> //Used for GPIO
 #include <softPwm.h>  //Used for GPIO
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <wiringPi.h>  //Used for GPIO
 
 /* Variáveis Globais do GPIO */
-#define PWM_PIN_RES 4
-#define PWM_PIN_VENT 5
+#define PWM_PIN_LAMP_01 0
+#define PWM_PIN_LAMP_02 1
+#define PWM_PIN_LAMP_03 2
+#define PWM_PIN_LAMP_04 3
+#define PWM_PIN_AR_01 23
+#define PWM_PIN_AR_02 24
 
-void configura_GPIO()
-{
+void configura_GPIO() {
     wiringPiSetup();
-    pinMode(PWM_PIN_RES, OUTPUT);
-    softPwmCreate(PWM_PIN_RES, 1, 100);
-    pinMode(PWM_PIN_VENT, OUTPUT);
-    softPwmCreate(PWM_PIN_VENT, 1, 100);
+
+    // Configura Lâmpadas
+    pinMode(PWM_PIN_LAMP_01, OUTPUT);
+    softPwmCreate(PWM_PIN_LAMP_01, 1, 100);
+
+    pinMode(PWM_PIN_LAMP_02, OUTPUT);
+    softPwmCreate(PWM_PIN_LAMP_02, 1, 100);
+
+    pinMode(PWM_PIN_LAMP_03, OUTPUT);
+    softPwmCreate(PWM_PIN_LAMP_03, 1, 100);
+
+    pinMode(PWM_PIN_LAMP_03, OUTPUT);
+    softPwmCreate(PWM_PIN_LAMP_03, 1, 100);
+
+    // Configura Ar-Condicionado
+    pinMode(PWM_PIN_AR_01, OUTPUT);
+    softPwmCreate(PWM_PIN_AR_01, 1, 100);
+
+    pinMode(PWM_PIN_AR_02, OUTPUT);
+    softPwmCreate(PWM_PIN_AR_02, 1, 100);
 }
 
-void ativa_circuito_de_potencia(int intensity)
-{
-    if (intensity > 0)
-    {
-        softPwmWrite(PWM_PIN_VENT, 0);
-        softPwmWrite(PWM_PIN_RES, abs(intensity));
-    }
-    else if (intensity <= -40)
-    {
-
-        softPwmWrite(PWM_PIN_RES, 0);
-        softPwmWrite(PWM_PIN_VENT, abs(intensity));
-    }
-    else
-    {
-        softPwmWrite(PWM_PIN_VENT, 0);
-        softPwmWrite(PWM_PIN_RES, 0);
+void liga_desliga_lamp_1(int estado) {
+    softPwmWrite(PWM_PIN_LAMP_01, 100 * estado);
+    if (estado) {
+        printf("Ligou a Lâmpada 1\n");
+    } else {
+        printf("Desligou a Lâmpada 1\n");
     }
 }
 
-void desativa_circuito_de_potencia()
-{
-    softPwmWrite(PWM_PIN_VENT, 0);
-    usleep(500000);
+void liga_desliga_lamp_2(int estado) {
+    softPwmWrite(PWM_PIN_LAMP_02, 100 * estado);
+    if (estado) {
+        printf("Ligou a Lâmpada 2\n");
+    } else {
+        printf("Desligou a Lâmpada 2\n");
+    }
+}
 
-    softPwmWrite(PWM_PIN_RES, 0);
-    usleep(500000);
+void liga_desliga_lamp_3(int estado) {
+    softPwmWrite(PWM_PIN_LAMP_03, 100 * estado);
+    if (estado) {
+        printf("Ligou a Lâmpada 3\n");
+    } else {
+        printf("Desligou a Lâmpada 3\n");
+    }
+}
+
+void liga_desliga_lamp_4(int estado) {
+    softPwmWrite(PWM_PIN_LAMP_04, 100 * estado);
+    if (estado) {
+        printf("Ligou a Lâmpada 4\n");
+    } else {
+        printf("Desligou a Lâmpada 4\n");
+    }
+}
+
+void liga_desliga_ar_1(int estado) {
+    softPwmWrite(PWM_PIN_AR_01, 100 * estado);
+    if (estado) {
+        printf("Ligou o Ar 1\n");
+    } else {
+        printf("Desligou o Ar 1\n");
+    }
+}
+
+void liga_desliga_ar_2(int estado) {
+    softPwmWrite(PWM_PIN_AR_02, 100 * estado);
+    if (estado) {
+        printf("Ligou o Ar 2\n");
+    } else {
+        printf("Desligou o Ar 2\n");
+    }
+}
+
+void desativa_circuito_de_potencia() {
+    // Desativa Lâmpadas
+    softPwmWrite(PWM_PIN_LAMP_01, 0);
+    usleep(100000);
+
+    softPwmWrite(PWM_PIN_LAMP_02, 0);
+    usleep(100000);
+
+    softPwmWrite(PWM_PIN_LAMP_03, 0);
+    usleep(100000);
+
+    softPwmWrite(PWM_PIN_LAMP_04, 0);
+    usleep(100000);
+
+    // Desativa Ar-Condicionado
+    softPwmWrite(PWM_PIN_AR_01, 0);
+    usleep(100000);
+
+    softPwmWrite(PWM_PIN_AR_02, 0);
+    usleep(100000);
 }
