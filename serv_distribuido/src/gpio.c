@@ -5,6 +5,7 @@
 #include <wiringPi.h>  //Used for GPIO
 
 /* Variáveis Globais do GPIO */
+// Define Pinos de Entrada de dados
 #define PWM_PIN_LAMP_01 0
 #define PWM_PIN_LAMP_02 1
 #define PWM_PIN_LAMP_03 2
@@ -12,10 +13,24 @@
 #define PWM_PIN_AR_01 23
 #define PWM_PIN_AR_02 24
 
+// Define Pinos de Saída de dados
+#define PIN_PRES_01 6
+#define PIN_PRES_02 25
+#define PIN_ABER_01 21
+#define PIN_ABER_02 22
+#define PIN_ABER_03 26
+#define PIN_ABER_04 27
+#define PIN_ABER_05 28
+#define PIN_ABER_06 29
+
+void handle_pres_1(void) {
+    printf("Ativou o sensor\n");
+}
+
 void configura_GPIO() {
     wiringPiSetup();
 
-    // Configura Lâmpadas
+    /* Configura Lâmpadas */
     pinMode(PWM_PIN_LAMP_01, OUTPUT);
     softPwmCreate(PWM_PIN_LAMP_01, 1, 100);
 
@@ -28,12 +43,15 @@ void configura_GPIO() {
     pinMode(PWM_PIN_LAMP_04, OUTPUT);
     softPwmCreate(PWM_PIN_LAMP_04, 1, 100);
 
-    // Configura Ar-Condicionado
+    /* Configura Ar-Condicionado*/
     pinMode(PWM_PIN_AR_01, OUTPUT);
     softPwmCreate(PWM_PIN_AR_01, 1, 100);
 
     pinMode(PWM_PIN_AR_02, OUTPUT);
     softPwmCreate(PWM_PIN_AR_02, 1, 100);
+
+    /* Configura Sensores */
+    wiringPiISR(PIN_PRES_01, INT_EDGE_RISING, &handle_pres_1)
 }
 
 void liga_desliga_lamp_1(int estado) {
