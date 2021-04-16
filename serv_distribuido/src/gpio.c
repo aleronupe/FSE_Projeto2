@@ -24,8 +24,38 @@
 #define PIN_ABER_06 29
 
 void handle_pres_1(void) {
-    printf("Ativou o sensor\n");
+    printf("Ativou o Sensor Presença 1\n");
 }
+
+void handle_pres_2(void) {
+    printf("Ativou o Sensor Presença 2\n");
+}
+
+void handle_aber_1(void) {
+    printf("Ativou o Sensor Abertura 1\n");
+}
+
+void handle_aber_2(void) {
+    printf("Ativou o Sensor Abertura 2\n");
+}
+
+void handle_aber_3(void) {
+    printf("Ativou o Sensor Abertura 3\n");
+}
+
+void handle_aber_4(void) {
+    printf("Ativou o Sensor Abertura 4\n");
+}
+
+void handle_aber_5(void) {
+    printf("Ativou o Sensor Abertura 5\n");
+}
+
+void handle_aber_6(void) {
+    printf("Ativou o Sensor Abertura 6\n");
+}
+
+
 
 void configura_GPIO() {
     wiringPiSetup();
@@ -52,6 +82,21 @@ void configura_GPIO() {
 
     /* Configura Sensores */
     wiringPiISR(PIN_PRES_01, INT_EDGE_RISING, &handle_pres_1);
+
+    wiringPiISR(PIN_PRES_02, INT_EDGE_RISING, &handle_pres_2);
+
+    wiringPiISR(PIN_ABER_01, INT_EDGE_RISING, &handle_aber_1);
+
+    wiringPiISR(PIN_ABER_02, INT_EDGE_RISING, &handle_aber_2);
+
+    wiringPiISR(PIN_ABER_03, INT_EDGE_RISING, &handle_aber_3);
+
+    wiringPiISR(PIN_ABER_04, INT_EDGE_RISING, &handle_aber_5);
+
+    wiringPiISR(PIN_ABER_05, INT_EDGE_RISING, &handle_aber_5);
+
+    wiringPiISR(PIN_ABER_06, INT_EDGE_RISING, &handle_aber_6);
+
 }
 
 void liga_desliga_lamp_1(int estado) {
