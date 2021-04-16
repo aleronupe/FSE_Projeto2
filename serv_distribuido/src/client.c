@@ -21,7 +21,7 @@ void monta_cliente(void *args) {
 	// Construir struct sockaddr_in
 	memset(&servidorAddr, 0, sizeof(servidorAddr)); // Zerando a estrutura de dados
 	servidorAddr.sin_family = AF_INET;
-	servidorAddr.sin_addr.s_addr = inet_addr(&IP_Servidor);
+	servidorAddr.sin_addr.s_addr = inet_addr("192.168.0.9");
 	servidorAddr.sin_port = htons(servidorPorta);
 
 	// Connect
