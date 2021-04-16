@@ -12,8 +12,6 @@ void iniciaTela();
 
 void carregaMenu(void *args);
 
-// void carrega_outro_menu(void *args);
-
 void desliga_telas();
 
 #endif /* PAINEL_H_ */

@@ -55,8 +55,6 @@ void handle_aber_6(void) {
     printf("Ativou o Sensor Abertura 6\n");
 }
 
-
-
 void configura_GPIO() {
     wiringPiSetup();
 
@@ -91,7 +89,7 @@ void configura_GPIO() {
 
     wiringPiISR(PIN_ABER_03, INT_EDGE_RISING, &handle_aber_3);
 
-    wiringPiISR(PIN_ABER_04, INT_EDGE_RISING, &handle_aber_5);
+    wiringPiISR(PIN_ABER_04, INT_EDGE_RISING, &handle_aber_4);
 
     wiringPiISR(PIN_ABER_05, INT_EDGE_RISING, &handle_aber_5);
 

@@ -8,6 +8,7 @@
 
 #include "control.h"
 #include "structures.h"
+#include "client.h"
 
 Servidor_Struct main_struct;
 
@@ -39,8 +40,11 @@ int main(int argc, const char *argv[]) {
     main_struct.sensorAbrt6 = 0;
 
     pthread_t control_tid;
+    pthread_t client_tid;
 
     pthread_create(&control_tid, NULL, (void *)controle_temp,
+                   (void *)&main_struct);
+    pthread_create(&client_tid, NULL, (void *)monta_cliente,
                    (void *)&main_struct);
 
     while (main_struct.flag_run == 1) {
@@ -48,6 +52,8 @@ int main(int argc, const char *argv[]) {
     }
 
     pthread_join(control_tid, NULL);
+    pthread_join(client_tid, NULL);
+
 
     return 0;
 }

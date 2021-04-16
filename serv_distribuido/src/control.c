@@ -29,30 +29,30 @@ void controle_temp(void *args) {
         printf("Temperatura: %lf\n", hum);
 
         /* GPIO */
-        liga_desliga_lamp_1(servStruct->lamp1);
+        // liga_desliga_lamp_1(servStruct->lamp1);
+        // sleep(1);
+
+        // liga_desliga_lamp_2(servStruct->lamp2);
+        // sleep(1);
+
+        // liga_desliga_lamp_3(servStruct->lamp3);
+        // sleep(1);
+
+        // liga_desliga_lamp_4(servStruct->lamp4);
+        // sleep(1);
+
+        // liga_desliga_ar_1(servStruct->ar1);
+        // sleep(1);
+
+        // liga_desliga_ar_2(servStruct->ar2);
         sleep(1);
 
-        liga_desliga_lamp_2(servStruct->lamp2);
-        sleep(1);
-
-        liga_desliga_lamp_3(servStruct->lamp3);
-        sleep(1);
-
-        liga_desliga_lamp_4(servStruct->lamp4);
-        sleep(1);
-
-        liga_desliga_ar_1(servStruct->ar1);
-        sleep(1);
-
-        liga_desliga_ar_2(servStruct->ar2);
-        sleep(1);
-
-        servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
-        servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
-        servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
-        servStruct->lamp4 = servStruct->lamp4 ? 0 : 1;
-        servStruct->ar1 = servStruct->ar1 ? 0 : 1;
-        servStruct->ar2 = servStruct->ar2 ? 0 : 1;
+        // servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
+        // servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
+        // servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
+        // servStruct->lamp4 = servStruct->lamp4 ? 0 : 1;
+        // servStruct->ar1 = servStruct->ar1 ? 0 : 1;
+        // servStruct->ar2 = servStruct->ar2 ? 0 : 1;
 
     }
 
