@@ -5,17 +5,14 @@ void monta_cliente(void *args) {
 	int clienteSocket;
 	struct sockaddr_in servidorAddr;
 	unsigned short servidorPorta;
-	char *IP_Servidor;
-	char *mensagem;
+	char IP_Servidor[15] = {"192.168.0.4"};
+	char mensagem[16] = {"Funcionou?"};
 	char buffer[16];
 	unsigned int tamanhoMensagem;
 
 	int bytesRecebidos;
 	int totalBytesRecebidos;
-
-	IP_Servidor = '192.168.0.4';
 	servidorPorta = 10010;
-	mensagem = "Funcionou?";
 
 	// Criar Socket
 	if((clienteSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
@@ -24,7 +21,7 @@ void monta_cliente(void *args) {
 	// Construir struct sockaddr_in
 	memset(&servidorAddr, 0, sizeof(servidorAddr)); // Zerando a estrutura de dados
 	servidorAddr.sin_family = AF_INET;
-	servidorAddr.sin_addr.s_addr = inet_addr(IP_Servidor);
+	servidorAddr.sin_addr.s_addr = inet_addr(&IP_Servidor);
 	servidorAddr.sin_port = htons(servidorPorta);
 
 	// Connect
