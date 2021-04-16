@@ -51,7 +51,7 @@ void configura_GPIO() {
     softPwmCreate(PWM_PIN_AR_02, 1, 100);
 
     /* Configura Sensores */
-    wiringPiISR(PIN_PRES_01, INT_EDGE_RISING, &handle_pres_1)
+    wiringPiISR(PIN_PRES_01, INT_EDGE_RISING, &handle_pres_1);
 }
 
 void liga_desliga_lamp_1(int estado) {
