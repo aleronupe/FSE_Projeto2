@@ -7,7 +7,7 @@ void monta_cliente(void *args) {
 	unsigned short servidorPorta;
 	char IP_Servidor[15] = {"192.168.0.4"};
 	char mensagem[16] = {"Funcionou?"};
-	char buffer[16];
+	char buffer[30];
 	unsigned int tamanhoMensagem;
 
 	int bytesRecebidos;
@@ -36,7 +36,7 @@ void monta_cliente(void *args) {
 
 	totalBytesRecebidos = 0;
 	while(totalBytesRecebidos < tamanhoMensagem) {
-		if((bytesRecebidos = recv(clienteSocket, buffer, 16-1, 0)) <= 0)
+		if((bytesRecebidos = recv(clienteSocket, buffer, 30-1, 0)) <= 0)
 			printf("Não recebeu o total de bytes enviados\n");
 		totalBytesRecebidos += bytesRecebidos;
 		buffer[bytesRecebidos] = '\0';

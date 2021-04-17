@@ -3,16 +3,17 @@
 
 void TrataClienteTCP(int socketCliente) {
 	char buffer[16];
+	char envio[30] = {"Menino, não é que veio?"};
 	int tamanhoRecebido;
 
 	if((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
 		printf("Erro no recv()\n");
 
 	while (tamanhoRecebido > 0) {
-		if(send(socketCliente, buffer, tamanhoRecebido, 0) != tamanhoRecebido)
+		if(send(socketCliente, envio, 30, 0) != tamanhoRecebido)
 			printf("Erro no envio - send()\n");
 		
-		if((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
+		if((tamanhoRecebido = recv(socketCliente, envio, 30, 0)) < 0)
 			printf("Erro no recv()\n");
 	}
 }
