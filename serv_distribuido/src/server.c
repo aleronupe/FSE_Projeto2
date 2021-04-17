@@ -49,8 +49,8 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
         if (send(socketCliente, envio, 30, 0) != 30)
             printf("Erro no envio - send()\n");
 
-        if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
-            printf("Erro no recv2()\n");
+        // if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
+        //     printf("Erro no recv2()\n");
     }
 }
 

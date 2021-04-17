@@ -63,10 +63,11 @@ void envia_mensagem_distribuido(int num_lamp) {
     char sinalRecebido = '0';
 
     while (sinalRecebido != '1') {
+        bzero(buffer, 30);
         recv(clienteSocket, buffer, 30 - 1, 0);
-        if (buffer[0] != '1') printf("Não recebeu o total de bytes enviados\n");
+        if (buffer[1] != '1') printf("Não recebeu o total de bytes enviados\n");
         sinalRecebido = buffer[0];
-        printf("%s\n", buffer);
+        printf("[%s]\n", buffer);
         sleep(2);
     }
     // close(clienteSocket);
