@@ -19,7 +19,6 @@ void mata_threads() {
     servStruct.flag_run = 0;
     sleep(1);
     desliga_telas();
-    fecha_conexoes();
     exit(0);
 }
 

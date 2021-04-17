@@ -12,4 +12,4 @@
 
 void monta_servidor(void *args);
 
-void fecha_conexoes();
+void fecha_conexoes_TCP();

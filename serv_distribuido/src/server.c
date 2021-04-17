@@ -75,7 +75,7 @@ void monta_servidor(void *args) {
     close(servidorSocket);
 }
 
-void fecha_conexoes() {
+void fecha_conexoes_TCP() {
     close(socketCliente);
     close(servidorSocket);
 }

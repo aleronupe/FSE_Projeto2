@@ -5,7 +5,7 @@ void monta_cliente(void *args) {
 	int clienteSocket;
 	struct sockaddr_in servidorAddr;
 	unsigned short servidorPorta;
-	char IP_Servidor[15] = {"192.168.0.4"};
+	char IP_Servidor[15] = {"192.168.0.9"};
 	char mensagem[16] = {"Funcionou?"};
 	char buffer[30];
 	unsigned int tamanhoMensagem;
@@ -21,7 +21,7 @@ void monta_cliente(void *args) {
 	// Construir struct sockaddr_in
 	memset(&servidorAddr, 0, sizeof(servidorAddr)); // Zerando a estrutura de dados
 	servidorAddr.sin_family = AF_INET;
-	servidorAddr.sin_addr.s_addr = inet_addr("192.168.0.9");
+	servidorAddr.sin_addr.s_addr = inet_addr(IP_Servidor);
 	servidorAddr.sin_port = htons(servidorPorta);
 
 	// Connect
