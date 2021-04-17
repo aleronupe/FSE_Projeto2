@@ -10,17 +10,25 @@ int totalBytesRecebidos;
 char buffer[30];
 unsigned int tamanhoMensagem;
 
-void monta_cliente() {
+void envia_mensagem_distribuido(int num_lamp) {
+    char mensagem[15];
+
+    switch (num_lamp) {
+        case 1:
+            strcpy(mensagem, "LIGA01");
+            break;
+        case 2:
+            strcpy(mensagem, "LIGA02");
+            break;
+    }
+    printf("O Que eu ia enviar: %s\n", mensagem);
+
     // Construir struct sockaddr_in
-    memset(&servidorAddr, 0, sizeof(servidorAddr));  // Zerando a estrutura de dados
+    memset(&servidorAddr, 0,
+           sizeof(servidorAddr));  // Zerando a estrutura de dados
     servidorAddr.sin_family = AF_INET;
     servidorAddr.sin_addr.s_addr = inet_addr(IP_Servidor);
     servidorAddr.sin_port = htons(servidorPorta);
-}
-
-void envia_mensagem_distribuido(char num_lamp) {
-    char mensagem[15] = {"LIGA0"};
-    mensagem[5] = num_lamp;
 
     // Criar Socket
     if ((clienteSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
