@@ -24,7 +24,7 @@ void TrataClienteTCP(int socketCliente) {
     }
 }
 
-void envia_mensagem_distribuido(int num_lamp) {
+void envia_mensagem_distribuido(char num_lamp) {
     char buffer[30];
     char envio[30] = {"LIGA0"};
     envio[5] = itoa(num_lamp);

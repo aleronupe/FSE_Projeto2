@@ -224,12 +224,12 @@ void atualizaInput(Servidor_Struct *servStruct) {
                     case 0:
                         servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
                         estadoEntradas[0] = estadoEntradas[0] ? 0 : 1;
-                        envia_mensagem_distribuido(1);
+                        envia_mensagem_distribuido('1');
                         break;
                     case 1:
                         servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
                         estadoEntradas[1] = estadoEntradas[1] ? 0 : 1;
-                        envia_mensagem_distribuido(2);
+                        envia_mensagem_distribuido('2');
                         break;
                     case 2:
                         servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
