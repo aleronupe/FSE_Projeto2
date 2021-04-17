@@ -48,12 +48,11 @@
 
 int clienteSocket;
 struct sockaddr_in servidorAddr;
-unsigned short servidorPorta;
+unsigned short servidorPorta = 10110;
 char IP_Servidor[15] = {"192.168.0.4"};
 
 int bytesRecebidos;
 int totalBytesRecebidos;
-servidorPorta = 10110;
 char buffer[30];
 unsigned int tamanhoMensagem;
 

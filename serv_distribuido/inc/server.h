@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "structures.h"
+#include "gpio.h"
 
 #define SERV_PORT 10110
 
