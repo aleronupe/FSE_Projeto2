@@ -5,8 +5,10 @@ int socketCliente;
 
 void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     char buffer[15];
-    char envio[30] = {"Menino, não é que veio?"};
+    char envio[30] = {"1Menino, não é que veio?1"};
     int tamanhoRecebido;
+
+    memset(buffer, '\0', sizeof(buffer));
 
     if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
         printf("Erro no recv1()\n");
