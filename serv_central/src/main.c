@@ -18,7 +18,7 @@ void mata_threads() {
     printf("Matou o processo\n");
     servStruct.flag_run = 0;
     sleep(1);
-    desliga_telas();
+    // desliga_telas();
     fecha_conexoes_TCP();
     exit(0);
 }
@@ -50,21 +50,23 @@ int main(int argc, const char *argv[]) {
     servStruct.sensorAbrt5 = 0;
     servStruct.sensorAbrt6 = 0;
 
-    iniciaTela();
+    // iniciaTela();
     monta_cliente();
 
     pthread_t menu_tid;
-    pthread_t server_tid;
+    // pthread_t server_tid;
 
     pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void *)&servStruct);
-    pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&servStruct);
+    // pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&servStruct);
     
     while (servStruct.flag_run == 1) {
-        sleep(1);
+        envia_mensagem_distribuido('1');
+        sleep(5);
+        envia_mensagem_distribuido('2');
     }
 
     pthread_join(menu_tid, NULL);
-    pthread_join(server_tid, NULL);
+    // pthread_join(server_tid, NULL);
 
     mata_threads();
 
