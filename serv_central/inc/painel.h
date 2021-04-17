@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include <curses.h>
+#include <pthread.h>
+
+#include "server.h"
 #include "structures.h"
 
 void iniciaTela();

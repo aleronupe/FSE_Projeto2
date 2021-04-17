@@ -8,3 +8,7 @@
 #define SERV_PORT 10010
 
 void monta_servidor(void *args);
+
+void fecha_conexoes();
+
+void envia_mensagem_distribuido(int num_lamp);
