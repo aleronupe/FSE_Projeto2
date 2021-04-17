@@ -44,17 +44,17 @@ int main(int argc, const char *argv[]) {
     main_struct.sensorAbrt6 = 0;
 
     pthread_t control_tid;
-    pthread_t server_tid;
+    // pthread_t server_tid;
 
     pthread_create(&control_tid, NULL, (void *)controle_temp, (void *)&main_struct);
-    pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&main_struct);
+    // pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&main_struct);
 
     while (main_struct.flag_run == 1) {
         sleep(1);
     }
 
     pthread_join(control_tid, NULL);
-    pthread_join(server_tid, NULL);
+    // pthread_join(server_tid, NULL);
 
     return 0;
 }
