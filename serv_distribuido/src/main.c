@@ -6,14 +6,17 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "control.h"
-#include "structures.h"
 #include "client.h"
+#include "control.h"
 #include "server.h"
+#include "structures.h"
 
 Servidor_Struct main_struct;
 
-void mata_threads() { main_struct.flag_run = 0; }
+void mata_threads() {
+    main_struct.flag_run = 0;
+    fecha_conexoes_TCP();
+}
 
 int main(int argc, const char *argv[]) {
     signal(SIGINT, mata_threads);
@@ -43,10 +46,8 @@ int main(int argc, const char *argv[]) {
     pthread_t control_tid;
     pthread_t server_tid;
 
-    pthread_create(&control_tid, NULL, (void *)controle_temp,
-                   (void *)&main_struct);
-    pthread_create(&server_tid, NULL, (void *)monta_servidor,
-                   (void *)&main_struct);
+    pthread_create(&control_tid, NULL, (void *)controle_temp, (void *)&main_struct);
+    pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&main_struct);
 
     while (main_struct.flag_run == 1) {
         sleep(1);
@@ -54,7 +55,6 @@ int main(int argc, const char *argv[]) {
 
     pthread_join(control_tid, NULL);
     pthread_join(server_tid, NULL);
-
 
     return 0;
 }

@@ -24,27 +24,6 @@ void TrataClienteTCP(int socketCliente) {
     }
 }
 
-// void envia_mensagem_distribuido(char num_lamp) {
-//     char buffer[30];
-//     char envio[30] = {"LIGA0"};
-//     envio[5] = itoa(num_lamp);
-//     int tamanhoRecebido;
-
-//     if (send(socketCliente, envio, 30, 0) > 10)
-//         printf("Erro no envio - send()\n");
-
-//     if ((tamanhoRecebido = recv(socketCliente, buffer, 30, 0)) < 0)
-//         printf("Erro no recv1()\n");
-
-//     printf("%s\n", buffer);
-
-//     while (tamanhoRecebido > 0) {
-//         if ((tamanhoRecebido = recv(socketCliente, buffer, 30, 0)) < 0)
-//             printf("Erro no recv2()\n");
-//         printf("%s\n", buffer);
-//     }
-// }
-
 void monta_servidor(void *args) {
     Servidor_Struct *servStruct = (Servidor_Struct *)args;
     struct sockaddr_in servidorAddr;
@@ -77,11 +56,9 @@ void monta_servidor(void *args) {
 
     while (!conexaoEstabelecida && servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
-        if ((socketCliente =
-                 accept(servidorSocket, (struct sockaddr *)&clienteAddr,
-                        &clienteLength)) < 0)
+        if ((socketCliente = accept(servidorSocket, (struct sockaddr *)&clienteAddr, &clienteLength)) < 0) {
             printf("Falha no Accept\n");
-        else {
+        } else {
             printf("Conexão do Cliente %s\n", inet_ntoa(clienteAddr.sin_addr));
             conexaoEstabelecida = 1;
         }

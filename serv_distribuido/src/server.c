@@ -11,6 +11,9 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
         printf("Erro no recv1()\n");
 
+    printf("o que recebeu foi:\n");
+    printf("%s\n", buffer);
+
     if (strcmp(buffer, "LIGA01") == 0) {
         servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
         liga_desliga_lamp_1(servStruct->lamp1);
@@ -42,15 +45,13 @@ void monta_servidor(void *args) {
         printf("falha no socker do Servidor\n");
 
     // Montar a estrutura sockaddr_in
-    memset(&servidorAddr, 0,
-           sizeof(servidorAddr));  // Zerando a estrutura de dados
+    memset(&servidorAddr, 0, sizeof(servidorAddr));  // Zerando a estrutura de dados
     servidorAddr.sin_family = AF_INET;
     servidorAddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servidorAddr.sin_port = htons(servidorPorta);
 
     // Bind
-    if (bind(servidorSocket, (struct sockaddr *)&servidorAddr,
-             sizeof(servidorAddr)) < 0)
+    if (bind(servidorSocket, (struct sockaddr *)&servidorAddr, sizeof(servidorAddr)) < 0)
         printf("Falha no Bind\n");
 
     // Listen
