@@ -7,14 +7,17 @@ void TrataClienteTCP(int socketCliente) {
 	int tamanhoRecebido;
 
 	if((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
-		printf("Erro no recv()\n");
+		printf("Erro no recv1()\n");
 
 	while (tamanhoRecebido > 0) {
+
+		printf("Tamanho recebido: %d\n", tamanhoRecebido);
+
 		if(send(socketCliente, envio, 30, 0) != tamanhoRecebido)
 			printf("Erro no envio - send()\n");
 		
 		if((tamanhoRecebido = recv(socketCliente, envio, 30, 0)) < 0)
-			printf("Erro no recv()\n");
+			printf("Erro no recv2()\n");
 	}
 }
 
