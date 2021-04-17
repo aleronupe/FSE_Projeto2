@@ -62,8 +62,16 @@ int main(int argc, const char *argv[]) {
     
     while (servStruct.flag_run == 1) {
         envia_mensagem_distribuido(1);
-        sleep(7);
+        sleep(10);
         envia_mensagem_distribuido(2);
+        sleep(10);
+        envia_mensagem_distribuido(3);
+        sleep(10);
+        envia_mensagem_distribuido(4);
+        sleep(10);
+        envia_mensagem_distribuido(5);
+        sleep(10);
+        envia_mensagem_distribuido(6);
     }
 
     // pthread_join(menu_tid, NULL);

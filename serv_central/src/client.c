@@ -34,6 +34,18 @@ void envia_mensagem_distribuido(int num_lamp) {
         case 2:
             strcpy(mensagem, "LIGA02");
             break;
+        case 3:
+            strcpy(mensagem, "LIGA03");
+            break;
+        case 4:
+            strcpy(mensagem, "LIGA04");
+            break;
+        case 5:
+            strcpy(mensagem, "AR01");
+            break;
+        case 6:
+            strcpy(mensagem, "AR01");
+            break;
     }
     printf("O Que eu ia enviar: %s\n", mensagem);
 
@@ -52,14 +64,10 @@ void envia_mensagem_distribuido(int num_lamp) {
 
     while (sinalRecebido != '1') {
         recv(clienteSocket, buffer, 30 - 1, 0);
-        if (buffer[0] != '1')
-            printf("Não recebeu o total de bytes enviados\n");
+        if (buffer[0] != '1') printf("Não recebeu o total de bytes enviados\n");
         sinalRecebido = buffer[0];
         printf("%s\n", buffer);
     }
-    close(clienteSocket);
 }
 
-void fecha_cliente(){
-    close(clienteSocket);
-}
+void fecha_cliente() { close(clienteSocket); }
