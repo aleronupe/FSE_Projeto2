@@ -8,3 +8,7 @@
 #include "structures.h"
 
 void envia_mensagem_distribuido(int num_lamp);
+
+void monta_cliente();
+
+void fecha_cliente();

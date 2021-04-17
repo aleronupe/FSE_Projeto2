@@ -5,7 +5,7 @@ void monta_cliente(void *args) {
 	int clienteSocket;
 	struct sockaddr_in servidorAddr;
 	unsigned short servidorPorta;
-	char IP_Servidor[15] = {"192.168.0.9"};
+	char IP_Servidor[15] = {"192.168.0.53"};
 	char mensagem[16] = {"Funcionou?"};
 	char buffer[30];
 	unsigned int tamanhoMensagem;

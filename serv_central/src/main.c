@@ -19,7 +19,8 @@ void mata_threads() {
     servStruct.flag_run = 0;
     sleep(1);
     // desliga_telas();
-    fecha_conexoes_TCP();
+    // fecha_conexoes_TCP();
+    fecha_cliente();
     exit(0);
 }
 
@@ -53,19 +54,19 @@ int main(int argc, const char *argv[]) {
     // iniciaTela();
     monta_cliente();
 
-    pthread_t menu_tid;
+    // pthread_t menu_tid;
     // pthread_t server_tid;
 
-    pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void *)&servStruct);
+    // pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void *)&servStruct);
     // pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&servStruct);
     
     while (servStruct.flag_run == 1) {
-        envia_mensagem_distribuido('1');
-        sleep(5);
-        envia_mensagem_distribuido('2');
+        envia_mensagem_distribuido(1);
+        sleep(7);
+        envia_mensagem_distribuido(2);
     }
 
-    pthread_join(menu_tid, NULL);
+    // pthread_join(menu_tid, NULL);
     // pthread_join(server_tid, NULL);
 
     mata_threads();
