@@ -1,49 +1,32 @@
 #include "server.h"
 
-#include "structures.h"
-
 int servidorSocket;
 int socketCliente;
 
-void TrataClienteTCP(int socketCliente) {
-    char buffer[16];
+void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
+    char buffer[15];
     char envio[30] = {"Menino, não é que veio?"};
     int tamanhoRecebido;
 
-    if ((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
+    if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
         printf("Erro no recv1()\n");
 
-    while (tamanhoRecebido > 0) {
-        printf("Tamanho recebido: %d\n", tamanhoRecebido);
+    if (strcmp(buffer, "LIGA01") == 0) {
+        servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
+        liga_desliga_lamp_1(servStruct->lamp1);
+    } else if (strcmp(buffer, "LIGA02") == 0) {
+        servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
+        liga_desliga_lamp_2(servStruct->lamp2);
+    }
 
+    while (tamanhoRecebido > 0) {
         if (send(socketCliente, envio, 30, 0) != 30)
             printf("Erro no envio - send()\n");
 
-        if ((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
+        if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
             printf("Erro no recv2()\n");
     }
 }
-
-// void envia_mensagem_distribuido(char num_lamp) {
-//     char buffer[30];
-//     char envio[30] = {"LIGA0"};
-//     envio[5] = itoa(num_lamp);
-//     int tamanhoRecebido;
-
-//     if (send(socketCliente, envio, 30, 0) > 10)
-//         printf("Erro no envio - send()\n");
-
-//     if ((tamanhoRecebido = recv(socketCliente, buffer, 30, 0)) < 0)
-//         printf("Erro no recv1()\n");
-
-//     printf("%s\n", buffer);
-
-//     while (tamanhoRecebido > 0) {
-//         if ((tamanhoRecebido = recv(socketCliente, buffer, 30, 0)) < 0)
-//             printf("Erro no recv2()\n");
-//         printf("%s\n", buffer);
-//     }
-// }
 
 void monta_servidor(void *args) {
     Servidor_Struct *servStruct = (Servidor_Struct *)args;
@@ -86,7 +69,7 @@ void monta_servidor(void *args) {
             conexaoEstabelecida = 1;
         }
 
-        TrataClienteTCP(socketCliente);
+        TrataClienteTCP(socketCliente, servStruct);
         close(socketCliente);
     }
     close(servidorSocket);

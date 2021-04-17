@@ -5,7 +5,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#define SERV_PORT 10010
+#include "structures.h"
+
+#define SERV_PORT 10110
 
 void monta_servidor(void *args);
 

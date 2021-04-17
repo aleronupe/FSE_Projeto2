@@ -5,8 +5,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#define SERV_PORT 10010
+#include "structures.h"
 
-void monta_servidor(void *args);
+void monta_cliente();
 
-void fecha_conexoes();
+void envia_mensagem_distribuido(char num_lamp);

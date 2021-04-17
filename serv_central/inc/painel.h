@@ -10,6 +10,7 @@
 
 #include "server.h"
 #include "structures.h"
+#include "client.h"
 
 void iniciaTela();
 

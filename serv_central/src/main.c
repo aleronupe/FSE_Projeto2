@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "cJSON.h"
+#include "client.h"
 #include "painel.h"
 #include "server.h"
 #include "structures.h"
@@ -50,6 +51,7 @@ int main(int argc, const char *argv[]) {
     servStruct.sensorAbrt6 = 0;
 
     iniciaTela();
+    monta_cliente();
 
     pthread_t menu_tid;
     pthread_t server_tid;
@@ -58,12 +60,13 @@ int main(int argc, const char *argv[]) {
 
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&servStruct);
-    pthread_join(server_tid, NULL);
+    
 
     while (servStruct.flag_run == 1) {
         sleep(1);
     }
 
+    pthread_join(server_tid, NULL);
     pthread_join(menu_tid, NULL);
 
     mata_threads();
