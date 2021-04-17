@@ -45,13 +45,13 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
         liga_desliga_ar_2(servStruct->ar2);
     }
 
-    // while (tamanhoRecebido > 0) {
-    //     if (send(socketCliente, envio, 30, 0) != 30)
-    //         printf("Erro no envio - send()\n");
+    while (tamanhoRecebido > 0) {
+        if (send(socketCliente, envio, 30, 0) != 30)
+            printf("Erro no envio - send()\n");
 
-    //     if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
-    //         printf("Erro no recv2()\n");
-    // }
+        if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
+            printf("Erro no recv2()\n");
+    }
 }
 
 void monta_servidor(void *args) {

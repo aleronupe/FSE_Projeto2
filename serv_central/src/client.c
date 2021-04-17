@@ -20,6 +20,11 @@ void monta_cliente() {
     // Criar Socket
     if ((clienteSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         printf("Erro no socket()\n");
+
+    // Connect
+    if (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
+                sizeof(servidorAddr)) < 0)
+        printf("Erro no connect()\n");
 }
 
 void envia_mensagem_distribuido(int num_lamp) {
@@ -49,11 +54,6 @@ void envia_mensagem_distribuido(int num_lamp) {
     }
     printf("O Que eu ia enviar: %s\n", mensagem);
 
-    // Connect
-    if (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
-                sizeof(servidorAddr)) < 0)
-        printf("Erro no connect()\n");
-
     tamanhoMensagem = strlen(mensagem);
 
     if (send(clienteSocket, mensagem, tamanhoMensagem, 0) != tamanhoMensagem)
@@ -67,7 +67,9 @@ void envia_mensagem_distribuido(int num_lamp) {
         if (buffer[0] != '1') printf("Não recebeu o total de bytes enviados\n");
         sinalRecebido = buffer[0];
         printf("%s\n", buffer);
+        sleep(2);
     }
+    // close(clienteSocket);
 }
 
 void fecha_cliente() { close(clienteSocket); }

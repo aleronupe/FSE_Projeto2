@@ -12,10 +12,15 @@
 #include "structures.h"
 
 Servidor_Struct main_struct;
+pthread_t control_tid;
+pthread_t server_tid;
 
 void mata_threads() {
     main_struct.flag_run = 0;
     fecha_conexoes_TCP();
+    sleep(1);
+    pthread_cancel(control_tid);
+    pthread_cancel(server_tid);
 }
 
 int main(int argc, const char *argv[]) {
@@ -43,18 +48,17 @@ int main(int argc, const char *argv[]) {
     main_struct.sensorAbrt5 = 0;
     main_struct.sensorAbrt6 = 0;
 
-    pthread_t control_tid;
-    pthread_t server_tid;
+    pthread_create(&control_tid, NULL, (void *)controle_temp,
+                   (void *)&main_struct);
+    pthread_create(&server_tid, NULL, (void *)monta_servidor,
+                   (void *)&main_struct);
 
-    pthread_create(&control_tid, NULL, (void *)controle_temp, (void *)&main_struct);
-    pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&main_struct);
+    pthread_detach(control_tid);
+    pthread_detach(server_tid);
 
     while (main_struct.flag_run == 1) {
         sleep(1);
     }
-
-    pthread_join(control_tid, NULL);
-    pthread_join(server_tid, NULL);
 
     return 0;
 }
