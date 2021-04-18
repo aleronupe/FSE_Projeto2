@@ -33,7 +33,7 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         printf("Erro no socket()\n");
 
     // Connect
-    if (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
+    while (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
                 sizeof(servidorAddr)) < 0)
         printf("Erro no connect()\n");
 

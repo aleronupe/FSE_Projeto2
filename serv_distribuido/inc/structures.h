@@ -14,6 +14,6 @@ typedef struct servidor_struct
 
 } Servidor_Struct;
 
-void inicializa_dados(Servidor_Struct *main_struct)
+void inicializa_dados(Servidor_Struct *main_struct);
 
 #endif /* STRUCUTRES_H_ */

@@ -6,6 +6,8 @@ int socketCliente;
 void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     char buffer[15];
     char envio[30] = {"1Menino, não é que veio?1"};
+    double temp, hum;
+    char temp_buf[10], hum_buf[10];
     int tamanhoRecebido;
 
     memset(buffer, '\0', sizeof(buffer));
@@ -50,8 +52,7 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             }
             break;
         case 'T':
-            double temp, hum;
-            char temp_buf[10], hum_buf[10];
+
             le_temp_e_umid(&temp, &hum);
             if (send(socketCliente, "T", 2, 0) < 0)
                 printf("Erro no envio de 'T' - send()\n");
