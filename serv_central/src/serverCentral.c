@@ -18,11 +18,9 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             switch (buffer[1]) {
                 case '1':
                     servStruct->sensorPres1 = buffer[2];
-                    ;
                     break;
                 case '2':
                     servStruct->sensorPres2 = buffer[2];
-                    ;
                     break;
             }
             break;
@@ -86,14 +84,17 @@ void monta_servidor(void *args) {
 
     while (servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
+        printf("Pronto para Aceitar cliente\n");
         strcpy(servStruct->mensagem, "Pronto para;Aceitar cliente;");
         servStruct->tipo_mensagem = 5;
         if ((socketCliente =
                  accept(servidorSocket, (struct sockaddr *)&clienteAddr,
                         &clienteLength)) < 0) {
+            printf("Falha no Accept\n");
             strcpy(servStruct->mensagem, "Falha no;Accept");
             servStruct->tipo_mensagem = 5;
         } else {
+            printf("Conexão estabelecida\n");
             char *aviso = {"Conexão estabelecida"};
             sprintf(aviso, "Conexão do ;Cliente;%s",
                     inet_ntoa(clienteAddr.sin_addr));
