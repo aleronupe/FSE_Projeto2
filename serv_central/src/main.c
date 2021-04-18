@@ -62,6 +62,7 @@ int main(int argc, const char *argv[]) {
     
     while (servStruct.flag_run == 1) {
         sleep(1);
+        requisita_temperatura(&servStruct);
     }
 
     pthread_join(menu_tid, NULL);

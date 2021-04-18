@@ -7,6 +7,8 @@
 
 #include "structures.h"
 #include "gpio.h"
+#include "bme280.h"
+#include "control.h"
 
 #define SERV_PORT 10110
 

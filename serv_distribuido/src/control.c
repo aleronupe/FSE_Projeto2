@@ -3,14 +3,10 @@
 /* Variáveis Globais do I2C */
 struct identifier id_i2c;
 
-void controle_temp(void *args) {
-    /*************** Variáveis ************/
+/* Variáveis do I2C */
+struct bme280_dev dev;
 
-    Servidor_Struct *servStruct = (Servidor_Struct *)args;
-
-    /* Variáveis do I2C */
-    struct bme280_dev dev;
-
+void inicia_conexoes() {
     /************ Configuração ************/
     /* Configuração do I2C */
     monta_i2c(&dev, &id_i2c);
@@ -20,40 +16,12 @@ void controle_temp(void *args) {
 
     /* Configuração do GPIO */
     configura_GPIO();
+}
 
-    while (servStruct->flag_run) {
-        /* I2C */
-        double temp, hum;
-        le_temp_bme280_i2c(&dev, &temp, &hum);
-        printf("Temperatura: %lf\n", temp);
-        printf("Temperatura: %lf\n", hum);
-
-	sleep(3);
-
-        /* GPIO */
-        // liga_desliga_lamp_1(servStruct->lamp1);
-        // sleep(1);
-
-        // liga_desliga_lamp_2(servStruct->lamp2);
-        // sleep(1);
-
-        // liga_desliga_lamp_3(servStruct->lamp3);
-        // sleep(1);
-
-        // liga_desliga_lamp_4(servStruct->lamp4);
-        // sleep(1);
-
-        // liga_desliga_ar_1(servStruct->ar1);
-        // sleep(1);
-
-        // liga_desliga_ar_2(servStruct->ar2);
-
-        // sleep(2);
-        // printf("Executando código de controle\n");
-    }
-
-    /************ Finalização ************/
-    fecha_conexoes();
+void le_temp_e_umid( double *temp, double *hum) {
+        le_temp_bme280_i2c(&dev, temp, hum);
+        printf("Temperatura: %.4lf\n", temp);
+        printf("Umidade: %.4lf\n", hum);    
 }
 
 void fecha_conexoes() {

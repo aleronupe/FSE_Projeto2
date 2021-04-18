@@ -12,7 +12,6 @@
 #include "structures.h"
 
 Servidor_Struct main_struct;
-pthread_t control_tid;
 pthread_t server_tid;
 
 void mata_threads() {
@@ -21,7 +20,6 @@ void mata_threads() {
     sleep(1);
     fecha_conexoes_TCP();
     sleep(1);
-    pthread_cancel(control_tid);
     pthread_cancel(server_tid);
 }
 
@@ -29,33 +27,12 @@ int main(int argc, const char *argv[]) {
     signal(SIGINT, mata_threads);
     signal(SIGKILL, mata_threads);
 
-    main_struct.flag_run = 1;
-    // --------Entradas--------
-    main_struct.lamp1 = 0;
-    main_struct.lamp2 = 0;
-    main_struct.lamp3 = 0;
-    main_struct.lamp4 = 0;
-    main_struct.ar1 = 0;
-    main_struct.ar2 = 0;
-    // --------Alarme-------
-    main_struct.alarme = 0;
-    main_struct.sinalAlarme = 0;
-    // ---------Sensores-------
-    main_struct.sensorPres1 = 0;
-    main_struct.sensorPres2 = 0;
-    main_struct.sensorAbrt1 = 0;
-    main_struct.sensorAbrt2 = 0;
-    main_struct.sensorAbrt3 = 0;
-    main_struct.sensorAbrt4 = 0;
-    main_struct.sensorAbrt5 = 0;
-    main_struct.sensorAbrt6 = 0;
+    inicializa_dados(&main_struct);
+    inicia_conexoes();
 
-    pthread_create(&control_tid, NULL, (void *)controle_temp,
-                   (void *)&main_struct);
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&main_struct);
 
-    pthread_detach(control_tid);
     pthread_detach(server_tid);
 
     while (main_struct.flag_run == 1) {

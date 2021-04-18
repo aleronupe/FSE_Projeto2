@@ -49,20 +49,29 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     break;
             }
             break;
+        case 'T':
+            double temp, hum;
+            char temp_buf[10], hum_buf[10];
+            le_temp_e_umid(&temp, &hum);
+            if (send(socketCliente, "T", 2, 0) < 0)
+                printf("Erro no envio de 'T' - send()\n");
+
+            sprintf(temp_buf, "%.4lf", temp);
+            sprintf(hum_buf, "%.4lf", hum);
+
+            if (send(socketCliente, temp_buf, 10, 0) != 10)
+                printf("Erro no envio da Temperatura - send()\n");
+
+            if (send(socketCliente, hum_buf, 10, 0) != 10)
+                printf("Erro no envio da Umidade - send()\n");
+
+            break;
     }
 
     if (send(socketCliente, envio, 30, 0) != 30)
         printf("Erro no envio - send()\n");
 
     printf("Finaliza recepção de dados do cliente\n");
-
-    // while (tamanhoRecebido > 0) {
-    //     if (send(socketCliente, envio, 30, 0) != 30)
-    //         printf("Erro no envio - send()\n");
-
-    //     // if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
-    //     //     printf("Erro no recv2()\n");
-    // }
 }
 
 void monta_servidor(void *args) {
@@ -104,7 +113,6 @@ void monta_servidor(void *args) {
             printf("Falha no Accept\n");
         else {
             printf("Conexão do Cliente %s\n", inet_ntoa(clienteAddr.sin_addr));
-            // conexaoEstabelecida = 1;
         }
 
         TrataClienteTCP(socketCliente, servStruct);

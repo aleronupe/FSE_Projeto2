@@ -11,7 +11,9 @@
 #include "i2c.h"
 #include "structures.h"
 
-void controle_temp(void *args);
+void inicia_conexoes();
+
+void le_temp_e_umid( double *temp, double *hum);
 
 void fecha_conexoes();
 
