@@ -20,8 +20,8 @@ void inicia_conexoes() {
 
 void le_temp_e_umid( double *temp, double *hum) {
         le_temp_bme280_i2c(&dev, temp, hum);
-        printf("Temperatura: %.4lf\n", temp);
-        printf("Umidade: %.4lf\n", hum);    
+        printf("Temperatura: %.4lf\n", *temp);
+        printf("Umidade: %.4lf\n", *hum);    
 }
 
 void fecha_conexoes() {

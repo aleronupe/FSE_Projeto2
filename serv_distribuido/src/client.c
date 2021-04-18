@@ -1,7 +1,7 @@
 #include "client.h"
 
 void monta_cliente(void *args) {
-    Servidor_Struct *servStruct = (Servidor_Struct *)args;
+    // Servidor_Struct *servStruct = (Servidor_Struct *)args;
 	int clienteSocket;
 	struct sockaddr_in servidorAddr;
 	unsigned short servidorPorta;

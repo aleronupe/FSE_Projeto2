@@ -16,7 +16,6 @@ void monta_cliente() {
 }
 
 void requisita_temperatura(Servidor_Struct *servStruct) {
-    int bytesRecebidos;
     char buffer[30];
     unsigned int tamanhoMensagem;
     char mensagem[15];
@@ -29,16 +28,20 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     tamanhoMensagem = strlen(mensagem);
 
     // Criar Socket
-    if ((clienteSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+    if ((clienteTempSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         printf("Erro no socket()\n");
 
     // Connect
-    while (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
-                sizeof(servidorAddr)) < 0)
-        printf("Erro no connect()\n");
+    int flag_connect = 1;
+    while (flag_connect) {
+        if(connect(clienteTempSocket, (struct sockaddr *)&servidorAddr, sizeof(servidorAddr)) < 0)
+            printf("Erro no connect()\n");
+        else 
+            flag_connect = 0;
+    }
 
     // Enviar Mensagem
-    if (send(clienteSocket, mensagem, tamanhoMensagem, 0) != tamanhoMensagem)
+    if (send(clienteTempSocket, mensagem, tamanhoMensagem, 0) != tamanhoMensagem)
         printf(
             "Erro no envio: numero de bytes enviados diferente do esperado\n");
 
@@ -47,15 +50,15 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     // Receber Mensagem
     while (sinalRecebido != '1') {
         bzero(buffer, 30);
-        recv(clienteSocket, buffer, 30, 0);
+        recv(clienteTempSocket, buffer, 30, 0);
         if (buffer[0] == 'T') {
             float temp, hum;
             bzero(buffer, 30);
-            recv(clienteSocket, buffer, 30, 0);
+            recv(clienteTempSocket, buffer, 30, 0);
             sscanf(buffer, "%f", &temp);
 
             bzero(buffer, 30);
-            recv(clienteSocket, buffer, 30, 0);
+            recv(clienteTempSocket, buffer, 30, 0);
             sscanf(buffer, "%f", &hum);
 
             servStruct->temp = temp;
@@ -70,11 +73,10 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     }
 
     // Fechar Conexão
-    close(clienteSocket);
+    close(clienteTempSocket);
 }
 
 void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos) {
-    int bytesRecebidos;
     char buffer[30];
     unsigned int tamanhoMensagem;
     char mensagem[15];
