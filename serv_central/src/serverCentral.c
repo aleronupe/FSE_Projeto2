@@ -51,7 +51,7 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     if (send(socketCliente, envio, 30, 0) != 30)
         printf("Erro no envio - send()\n");
 
-    printf("Finaliza recepção de dados do cliente\n");
+    // printf("Finaliza recepção de dados do cliente\n");
 }
 
 void monta_servidor(void *args) {
@@ -84,7 +84,7 @@ void monta_servidor(void *args) {
 
     while (servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
-        printf("Pronto para Aceitar cliente\n");
+        // printf("Pronto para Aceitar cliente\n");
         strcpy(servStruct->mensagem, "Pronto para;Aceitar cliente;");
         servStruct->tipo_mensagem = 5;
         if ((socketCliente =
@@ -94,7 +94,7 @@ void monta_servidor(void *args) {
             strcpy(servStruct->mensagem, "Falha no;Accept");
             servStruct->tipo_mensagem = 5;
         } else {
-            printf("Conexão estabelecida\n");
+            // printf("Conexão estabelecida\n");
             char *aviso = {"Conexão estabelecida"};
             sprintf(aviso, "Conexão do ;Cliente;%s",
                     inet_ntoa(clienteAddr.sin_addr));
