@@ -11,6 +11,7 @@
 #include "serverCentral.h"
 #include "structures.h"
 #include "clientCentral.h"
+#include "csv.h"
 
 void iniciaTela();
 

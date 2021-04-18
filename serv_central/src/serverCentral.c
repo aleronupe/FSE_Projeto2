@@ -90,7 +90,7 @@ void monta_servidor(void *args) {
         if ((socketCliente =
                  accept(servidorSocket, (struct sockaddr *)&clienteAddr,
                         &clienteLength)) < 0) {
-            printf("Falha no Accept\n");
+            // printf("Falha no Accept\n");
             strcpy(servStruct->mensagem, "Falha no;Accept");
             servStruct->tipo_mensagem = 5;
         } else {

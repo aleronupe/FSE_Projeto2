@@ -229,40 +229,45 @@ void atualizaInput(Servidor_Struct *servStruct) {
                         servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
                         estadoEntradas[0] = estadoEntradas[0] ? 0 : 1;
                         envia_mensagem_distribuido('L', servStruct->lamp1, '1');
+                        escreve_csv(servStruct->lamp1, "Lampada", "1");
                         break;
                     case 1:
                         servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
                         estadoEntradas[1] = estadoEntradas[1] ? 0 : 1;
                         envia_mensagem_distribuido('L', servStruct->lamp2, '2');
+                        escreve_csv(servStruct->lamp2, "Lampada", "2");
                         break;
                     case 2:
                         servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
                         estadoEntradas[2] = estadoEntradas[2] ? 0 : 1;
                         envia_mensagem_distribuido('L', servStruct->lamp3, '3');
+                        escreve_csv(servStruct->lamp3, "Lampada", "3");
                         break;
                     case 3:
                         servStruct->lamp4 = servStruct->lamp4 ? 0 : 1;
                         estadoEntradas[3] = estadoEntradas[3] ? 0 : 1;
                         envia_mensagem_distribuido('L', servStruct->lamp4, '4');
+                        escreve_csv(servStruct->lamp4, "Lampada", "4");
                         break;
                     case 4:
                         servStruct->ar1 = servStruct->ar1 ? 0 : 1;
                         estadoEntradas[4] = estadoEntradas[4] ? 0 : 1;
                         envia_mensagem_distribuido('A', servStruct->ar1, '1');
+                        escreve_csv(servStruct->ar1, "Ar Condicionado", "1");
                         break;
                     case 5:
                         servStruct->ar2 = servStruct->ar2 ? 0 : 1;
                         estadoEntradas[5] = estadoEntradas[5] ? 0 : 1;
                         envia_mensagem_distribuido('A', servStruct->ar2, '2');
+                        escreve_csv(servStruct->ar2, "Ar Condicionado", "2");
                         break;
                     case 6:
                         servStruct->alarme = servStruct->alarme ? 0 : 1;
                         estadoEntradas[6] = estadoEntradas[6] ? 0 : 1;
-                        break;
+                        escreve_csv(servStruct->alarme, "Alarme", "2");
+                     break;
                     case 7:
                         servStruct->flag_run = 0;
-                        // sleep(2);
-                        // desliga_telas();
                         break;
                     default:
                         break;
