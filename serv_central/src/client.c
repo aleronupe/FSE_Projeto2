@@ -57,12 +57,12 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
             float temp, hum;
             bzero(buffer, 30);
             recv(clienteTempSocket, buffer, 30, 0);
-            sscanf(buffer, "%f", &temp);
+            sscanf(buffer, "%.4f", &temp);
             printf("[%s]\n", buffer);
 
             bzero(buffer, 30);
             recv(clienteTempSocket, buffer, 30, 0);
-            sscanf(buffer, "%f", &hum);
+            sscanf(buffer, "%.4f", &hum);
             printf("[%s]\n", buffer);
 
             servStruct->temp = temp;

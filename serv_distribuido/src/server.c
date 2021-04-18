@@ -52,23 +52,26 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             }
             break;
         case 'T':
-
             le_temp_e_umid(&temp, &hum);
             if (send(socketCliente, "T", 2, 0) < 0)
                 printf("Erro no envio de 'T' - send()\n");
 
+            memset(temp_buf, '\0', sizeof(temp_buf));
             sprintf(temp_buf, "%.4lf", temp);
-            sprintf(hum_buf, "%.4lf", hum);
-
             if (send(socketCliente, temp_buf, 10, 0) != 10)
                 printf("Erro no envio da Temperatura - send()\n");
+            usleep(200000);
 
+            memset(hum_buf, '\0', sizeof(hum_buf));
+            sprintf(hum_buf, "%.4lf", hum);
             if (send(socketCliente, hum_buf, 10, 0) != 10)
                 printf("Erro no envio da Umidade - send()\n");
+            usleep(200000);
 
             break;
     }
 
+    memset(buffer, '\0', sizeof(buffer));
     if (send(socketCliente, envio, 30, 0) != 30)
         printf("Erro no envio - send()\n");
 
