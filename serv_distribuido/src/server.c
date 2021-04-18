@@ -59,9 +59,9 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             sprintf(temp_buf, "%.4lf;", temp);
             sprintf(hum_buf, "%.4lf;", hum);
 
-            strcpy(envio, "T;");
-            strcat(envio, temp_buf);
-            strcat(envio, hum_buf);
+            strcpy(envio_temp_hum, "T;");
+            strcat(envio_temp_hum, temp_buf);
+            strcat(envio_temp_hum, hum_buf);
 
             if (send(socketCliente, envio_temp_hum, 30, 0) < 0)
                 printf("Erro no envio de 'T' - send()\n");
