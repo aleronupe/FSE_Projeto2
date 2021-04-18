@@ -6,9 +6,9 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "client.h"
+#include "clientDistribuido.h"
 #include "control.h"
-#include "server.h"
+#include "serverDistribuido.h"
 #include "structures.h"
 
 Servidor_Struct main_struct;

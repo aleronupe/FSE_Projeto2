@@ -1,5 +1,5 @@
-#ifndef CLIENT_H_
-#define CLIENT_H_
+#ifndef CLIENT_DISTRIBUIDO_H_
+#define CLIENT_DISTRIBUIDO_H_
 
 #include <stdio.h>
 #include <sys/socket.h>
@@ -16,4 +16,4 @@ void envia_mensagem_central(char cod_sinal, char pos, int estado_sinal);
 
 void fecha_cliente();
 
-#endif /* CLIENT_H_ */
+#endif /* CLIENT_DISTRIBUIDO_H_ */

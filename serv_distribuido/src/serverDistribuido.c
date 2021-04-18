@@ -1,4 +1,4 @@
-#include "server.h"
+#include "serverDistribuido.h"
 
 int servidorSocket;
 int socketCliente;

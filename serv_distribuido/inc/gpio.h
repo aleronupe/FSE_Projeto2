@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <wiringPi.h>  //Used for GPIO
 
-#include "client.h"
+#include "clientDistribuido.h"
 
 void configura_GPIO();
 

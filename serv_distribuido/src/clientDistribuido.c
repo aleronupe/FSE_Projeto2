@@ -1,7 +1,6 @@
-#include "client.h"
+#include "clientDistribuido.h"
 
 int clienteSocket;
-int clienteTempSocket;
 struct sockaddr_in servidorAddr;
 unsigned short servidorPorta = 10010;
 char IP_Servidor[15] = {"192.168.0.53"};
@@ -58,5 +57,4 @@ void envia_mensagem_central(char cod_sinal, char pos, int estado_sinal) {
 
 void fecha_cliente() {
     close(clienteSocket);
-    close(clienteTempSocket);
 }

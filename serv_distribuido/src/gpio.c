@@ -21,82 +21,82 @@
 
 void handle_pres_1(void) {
     int estado = digitalRead(PIN_PRES_01);
-    envia_mensagem_central('P', '1', estado);
     if (estado) {
         printf("Ativou o Sensor Presença 1\n");
     } else {
         printf("Desativou o Sensor Presença 1\n");
     }
+    envia_mensagem_central('P', '1', estado);
 }
 
 void handle_pres_2(void) {
     int estado = digitalRead(PIN_PRES_02);
-    envia_mensagem_central('P', '2', estado);
     if (estado) {
         printf("Ativou o Sensor Presença 2\n");
     } else {
         printf("Desativou o Sensor Presença 2\n");
     }
+    envia_mensagem_central('P', '2', estado);
 }
 
 void handle_aber_1(void) {
     int estado = digitalRead(PIN_ABER_01);
-    envia_mensagem_central('A', '1', estado);
     if (estado) {
         printf("Ativou o Sensor Abertura 1\n");
     } else {
         printf("Desativou o Sensor Abertura 1\n");
     }
+    envia_mensagem_central('A', '1', estado);
 }
 
 void handle_aber_2(void) {
     int estado = digitalRead(PIN_ABER_02);
-    envia_mensagem_central('A', '2', estado);
     if (estado) {
         printf("Ativou o Sensor Abertura 2\n");
     } else {
         printf("Desativou o Sensor Abertura 2\n");
     }
+    envia_mensagem_central('A', '2', estado);
 }
 
 void handle_aber_3(void) {
     int estado = digitalRead(PIN_ABER_03);
-    envia_mensagem_central('A', '3', estado);
     if (estado) {
         printf("Ativou o Sensor Abertura 3\n");
     } else {
         printf("Desativou o Sensor Abertura 3\n");
     }
+    envia_mensagem_central('A', '3', estado);
 }
 
 void handle_aber_4(void) {
     int estado = digitalRead(PIN_ABER_04);
-    envia_mensagem_central('A', '4', estado);
     if (estado) {
         printf("Ativou o Sensor Abertura 4\n");
     } else {
         printf("Desativou o Sensor Abertura 4\n");
     }
+    envia_mensagem_central('A', '4', estado);
 }
 
 void handle_aber_5(void) {
     int estado = digitalRead(PIN_ABER_05);
-    envia_mensagem_central('A', '5', estado);
     if (estado) {
         printf("Ativou o Sensor Abertura 5\n");
     } else {
         printf("Desativou o Sensor Abertura 5\n");
     }
+    envia_mensagem_central('A', '5', estado);
 }
 
 void handle_aber_6(void) {
     int estado = digitalRead(PIN_ABER_06);
-    envia_mensagem_central('A', '6', estado);
     if (estado) {
         printf("Ativou o Sensor Abertura 6\n");
     } else {
         printf("Desativou o Sensor Abertura 6\n");
     }
+    envia_mensagem_central('A', '6', estado);
 }
 
 void configura_GPIO() {
