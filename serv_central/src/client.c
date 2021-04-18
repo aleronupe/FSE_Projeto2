@@ -37,7 +37,7 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
                     sizeof(servidorAddr)) < 0)
             printf("Erro no connect()\n");
-        else 
+        else
             try = 0;
     }
 
@@ -53,9 +53,10 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     while (sinalRecebido != '1') {
         bzero(buffer, 30);
         recv(clienteTempSocket, buffer, 30, 0);
+        printf("[%s]\n", buffer);
         if (buffer[0] == 'T') {
             float temp, hum;
-            char* token = strtok(buffer, ";");
+            char *token = strtok(buffer, ";");
             token = strtok(NULL, ";");
             sscanf(token, "%f", &temp);
             token = strtok(NULL, ";");
@@ -70,10 +71,10 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         } else if (buffer[0] == '1') {
             printf("Começou com 1\n");
             sinalRecebido = buffer[0];
-            printf("[%s]\n", buffer);
+            // printf("[%s]\n", buffer);
         } else {
             printf("Não recebeu o total de bytes enviados\n");
-            printf("[%s]\n", buffer);
+            // printf("[%s]\n", buffer);
         }
         sleep(2);
     }
