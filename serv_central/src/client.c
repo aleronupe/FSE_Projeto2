@@ -32,12 +32,18 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         printf("Erro no socket()\n");
 
     // Connect
-    if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
-                sizeof(servidorAddr)) < 0)
-        printf("Erro no connect()\n");
+    int try = 1;
+    while (try) {
+        if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
+                    sizeof(servidorAddr)) < 0)
+            printf("Erro no connect()\n");
+        else 
+            try = 0;
+    }
 
     // Enviar Mensagem
-    if (send(clienteTempSocket, mensagem, tamanhoMensagem, 0) != tamanhoMensagem)
+    if (send(clienteTempSocket, mensagem, tamanhoMensagem, 0) !=
+        tamanhoMensagem)
         printf(
             "Erro no envio: numero de bytes enviados diferente do esperado\n");
 
