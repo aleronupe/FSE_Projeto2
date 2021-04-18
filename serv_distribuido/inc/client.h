@@ -7,4 +7,8 @@
 
 #include "structures.h"
 
-void monta_cliente(void *args);
+void monta_cliente();
+
+void envia_mensagem_central(char cod_sinal, char pos, int estado_sinal);
+
+void fecha_cliente();

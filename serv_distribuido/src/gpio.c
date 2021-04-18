@@ -1,8 +1,4 @@
-#include <softPwm.h>  //Used for GPIO
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <wiringPi.h>  //Used for GPIO
+#include "gpio.h"
 
 /* Variáveis Globais do GPIO */
 // Define Pinos de Entrada de dados
@@ -24,35 +20,83 @@
 #define PIN_ABER_06 29
 
 void handle_pres_1(void) {
-    printf("Ativou o Sensor Presença 1\n");
+    int estado = digitalRead(PIN_PRES_01);
+    envia_mensagem_central('P', '1', estado);
+    if (estado) {
+        printf("Ativou o Sensor Presença 1\n");
+    } else {
+        printf("Desativou o Sensor Presença 1\n");
+    }
 }
 
 void handle_pres_2(void) {
-    printf("Ativou o Sensor Presença 2\n");
+    int estado = digitalRead(PIN_PRES_02);
+    envia_mensagem_central('P', '2', estado);
+    if (estado) {
+        printf("Ativou o Sensor Presença 2\n");
+    } else {
+        printf("Desativou o Sensor Presença 2\n");
+    }
 }
 
 void handle_aber_1(void) {
-    printf("Ativou o Sensor Abertura 1\n");
+    int estado = digitalRead(PIN_ABER_01);
+    envia_mensagem_central('A', '1', estado);
+    if (estado) {
+        printf("Ativou o Sensor Abertura 1\n");
+    } else {
+        printf("Desativou o Sensor Abertura 1\n");
+    }
 }
 
 void handle_aber_2(void) {
-    printf("Ativou o Sensor Abertura 2\n");
+    int estado = digitalRead(PIN_ABER_02);
+    envia_mensagem_central('A', '2', estado);
+    if (estado) {
+        printf("Ativou o Sensor Abertura 2\n");
+    } else {
+        printf("Desativou o Sensor Abertura 2\n");
+    }
 }
 
 void handle_aber_3(void) {
-    printf("Ativou o Sensor Abertura 3\n");
+    int estado = digitalRead(PIN_ABER_03);
+    envia_mensagem_central('A', '3', estado);
+    if (estado) {
+        printf("Ativou o Sensor Abertura 3\n");
+    } else {
+        printf("Desativou o Sensor Abertura 3\n");
+    }
 }
 
 void handle_aber_4(void) {
-    printf("Ativou o Sensor Abertura 4\n");
+    int estado = digitalRead(PIN_ABER_04);
+    envia_mensagem_central('A', '4', estado);
+    if (estado) {
+        printf("Ativou o Sensor Abertura 4\n");
+    } else {
+        printf("Desativou o Sensor Abertura 4\n");
+    }
 }
 
 void handle_aber_5(void) {
-    printf("Ativou o Sensor Abertura 5\n");
+    int estado = digitalRead(PIN_ABER_05);
+    envia_mensagem_central('A', '5', estado);
+    if (estado) {
+        printf("Ativou o Sensor Abertura 5\n");
+    } else {
+        printf("Desativou o Sensor Abertura 5\n");
+    }
 }
 
 void handle_aber_6(void) {
-    printf("Ativou o Sensor Abertura 6\n");
+    int estado = digitalRead(PIN_ABER_06);
+    envia_mensagem_central('A', '6', estado);
+    if (estado) {
+        printf("Ativou o Sensor Abertura 6\n");
+    } else {
+        printf("Desativou o Sensor Abertura 6\n");
+    }
 }
 
 void configura_GPIO() {
@@ -79,22 +123,29 @@ void configura_GPIO() {
     softPwmCreate(PWM_PIN_AR_02, 1, 100);
 
     /* Configura Sensores */
-    wiringPiISR(PIN_PRES_01, INT_EDGE_RISING, &handle_pres_1);
+    pinMode(PIN_PRES_01, INPUT);
+    wiringPiISR(PIN_PRES_01, INT_EDGE_BOTH, &handle_pres_1);
 
-    wiringPiISR(PIN_PRES_02, INT_EDGE_RISING, &handle_pres_2);
+    pinMode(PIN_PRES_02, INPUT);
+    wiringPiISR(PIN_PRES_02, INT_EDGE_BOTH, &handle_pres_2);
 
-    wiringPiISR(PIN_ABER_01, INT_EDGE_RISING, &handle_aber_1);
+    pinMode(PIN_ABER_01, INPUT);
+    wiringPiISR(PIN_ABER_01, INT_EDGE_BOTH, &handle_aber_1);
 
-    wiringPiISR(PIN_ABER_02, INT_EDGE_RISING, &handle_aber_2);
+    pinMode(PIN_ABER_02, INPUT);
+    wiringPiISR(PIN_ABER_02, INT_EDGE_BOTH, &handle_aber_2);
 
-    wiringPiISR(PIN_ABER_03, INT_EDGE_RISING, &handle_aber_3);
+    pinMode(PIN_ABER_03, INPUT);
+    wiringPiISR(PIN_ABER_03, INT_EDGE_BOTH, &handle_aber_3);
 
-    wiringPiISR(PIN_ABER_04, INT_EDGE_RISING, &handle_aber_4);
+    pinMode(PIN_ABER_04, INPUT);
+    wiringPiISR(PIN_ABER_04, INT_EDGE_BOTH, &handle_aber_4);
 
-    wiringPiISR(PIN_ABER_05, INT_EDGE_RISING, &handle_aber_5);
+    pinMode(PIN_ABER_05, INPUT);
+    wiringPiISR(PIN_ABER_05, INT_EDGE_BOTH, &handle_aber_5);
 
-    wiringPiISR(PIN_ABER_06, INT_EDGE_RISING, &handle_aber_6);
-
+    pinMode(PIN_ABER_06, INPUT);
+    wiringPiISR(PIN_ABER_06, INT_EDGE_BOTH, &handle_aber_6);
 }
 
 void liga_desliga_lamp_1(int estado) {

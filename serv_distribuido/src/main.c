@@ -20,6 +20,7 @@ void mata_threads() {
     sleep(1);
     fecha_conexoes_TCP();
     sleep(1);
+    fecha_cliente();
     pthread_cancel(server_tid);
 }
 

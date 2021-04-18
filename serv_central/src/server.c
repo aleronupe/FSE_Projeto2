@@ -1,27 +1,57 @@
 #include "server.h"
 
-#include "structures.h"
-
 int servidorSocket;
 int socketCliente;
 
-void TrataClienteTCP(int socketCliente) {
-    char buffer[16];
-    char envio[30] = {"Menino, não é que veio?"};
+void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
+    char buffer[15];
+    char envio[30] = {"1Menino, não é que veio?1"};
     int tamanhoRecebido;
 
-    if ((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
+    memset(buffer, '\0', sizeof(buffer));
+
+    if ((tamanhoRecebido = recv(socketCliente, buffer, 15, 0)) < 0)
         printf("Erro no recv1()\n");
 
-    while (tamanhoRecebido > 0) {
-        printf("Tamanho recebido: %d\n", tamanhoRecebido);
-
-        if (send(socketCliente, envio, 30, 0) != 30)
-            printf("Erro no envio - send()\n");
-
-        if ((tamanhoRecebido = recv(socketCliente, buffer, 16, 0)) < 0)
-            printf("Erro no recv2()\n");
+    switch (buffer[0]) {
+        case 'P':
+            switch (buffer[1]) {
+                case '1':
+                    servStruct->sensorPres1 = buffer[2];;
+                    break;
+                case '2':
+                    servStruct->sensorPres2 = buffer[2];;
+                    break;
+            }
+            break;
+        case 'A':
+            switch (buffer[1]) {
+                case '1':
+                    servStruct->sensorAbrt1 = buffer[2];
+                    break;
+                case '2':
+                    servStruct->sensorAbrt2 = buffer[2];
+                    break;
+                case '3':
+                    servStruct->sensorAbrt3 = buffer[2];
+                    break;
+                case '4':
+                    servStruct->sensorAbrt4 = buffer[2];
+                    break;
+                case '5':
+                    servStruct->sensorAbrt5 = buffer[2];
+                    break;
+                case '6':
+                    servStruct->sensorAbrt6 = buffer[2];
+                    break;
+            }
+            break;
     }
+
+    if (send(socketCliente, envio, 30, 0) != 30)
+        printf("Erro no envio - send()\n");
+
+    printf("Finaliza recepção de dados do cliente\n");
 }
 
 void monta_servidor(void *args) {
@@ -50,20 +80,25 @@ void monta_servidor(void *args) {
         printf("Falha no Bind\n");
 
     // Listen
-    if (listen(servidorSocket, 10) < 0) printf("Falha no Listen\n");
+    if (listen(servidorSocket, 1) < 0) printf("Falha no Listen\n");
 
-    int conexaoEstabelecida = 0;
-
-    while (!conexaoEstabelecida && servStruct->flag_run) {
+    while (servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
-        if ((socketCliente = accept(servidorSocket, (struct sockaddr *)&clienteAddr, &clienteLength)) < 0) {
-            printf("Falha no Accept\n");
+        printf("Prepara para aceitar cliente\n");
+        if ((socketCliente =
+                 accept(servidorSocket, (struct sockaddr *)&clienteAddr,
+                        &clienteLength)) < 0) {
+            strcpy(servStruct->mensagem, "Falha no;Accept");
+            servStruct->tipo_mensagem = 5;
         } else {
-            printf("Conexão do Cliente %s\n", inet_ntoa(clienteAddr.sin_addr));
-            conexaoEstabelecida = 1;
+            char *aviso;
+            sprintf(aviso, "Conexão do ;Cliente;%s",
+                    inet_ntoa(clienteAddr.sin_addr));
+            strcpy(servStruct->mensagem, aviso);
+            servStruct->tipo_mensagem = 1;
         }
 
-        TrataClienteTCP(socketCliente);
+        TrataClienteTCP(socketCliente, servStruct);
         close(socketCliente);
     }
     close(servidorSocket);
