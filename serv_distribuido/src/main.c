@@ -29,9 +29,9 @@ int main(int argc, const char *argv[]) {
     signal(SIGKILL, mata_threads);
     signal(SIGPIPE, NULL);
 
-
     inicializa_dados(&main_struct);
     inicia_conexoes();
+    monta_cliente();
 
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&main_struct);
