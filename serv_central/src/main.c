@@ -7,9 +7,9 @@
 #include <unistd.h>
 
 #include "cJSON.h"
-#include "client.h"
+#include "clientCentral.h"
 #include "painel.h"
-#include "server.h"
+#include "serverCentral.h"
 #include "structures.h"
 
 Servidor_Struct servStruct;

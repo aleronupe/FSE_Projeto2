@@ -8,9 +8,9 @@
 #include <curses.h>
 #include <pthread.h>
 
-#include "server.h"
+#include "serverCentral.h"
 #include "structures.h"
-#include "client.h"
+#include "clientCentral.h"
 
 void iniciaTela();
 

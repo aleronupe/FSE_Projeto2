@@ -1,4 +1,4 @@
-#include "server.h"
+#include "serverCentral.h"
 
 int servidorSocket;
 int socketCliente;
@@ -17,10 +17,12 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
         case 'P':
             switch (buffer[1]) {
                 case '1':
-                    servStruct->sensorPres1 = buffer[2];;
+                    servStruct->sensorPres1 = buffer[2];
+                    ;
                     break;
                 case '2':
-                    servStruct->sensorPres2 = buffer[2];;
+                    servStruct->sensorPres2 = buffer[2];
+                    ;
                     break;
             }
             break;
@@ -84,7 +86,8 @@ void monta_servidor(void *args) {
 
     while (servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
-        printf("Prepara para aceitar cliente\n");
+        strcpy(servStruct->mensagem, "Pronto para;Aceitar cliente;");
+        servStruct->tipo_mensagem = 5;
         if ((socketCliente =
                  accept(servidorSocket, (struct sockaddr *)&clienteAddr,
                         &clienteLength)) < 0) {

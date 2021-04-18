@@ -1,5 +1,5 @@
-#ifndef SERVER_H_
-#define SERVER_H_
+#ifndef SERVER_CENTRAL_H_
+#define SERVER_CENTRAL_H_
 
 #include <stdio.h>
 #include <sys/socket.h>
@@ -16,4 +16,4 @@ void monta_servidor(void *args);
 
 void fecha_conexoes_TCP();
 
-#endif /* SERVER_H_ */
+#endif /* SERVER_CENTRAL_H_ */

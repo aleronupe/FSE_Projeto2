@@ -1,4 +1,4 @@
-#include "client.h"
+#include "clientCentral.h"
 
 int clienteSocket;
 int clienteTempSocket;
@@ -33,7 +33,7 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
 
     // Connect
     int try = 1;
-    while (try) {
+    while (try && servStruct->flag_run) {
         if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
                     sizeof(servidorAddr)) < 0) {
             strcpy(servStruct->mensagem, "Aguardando;Servidor;Distribuido");

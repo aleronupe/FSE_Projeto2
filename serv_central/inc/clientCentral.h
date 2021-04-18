@@ -1,5 +1,5 @@
-#ifndef CLIENT_H_
-#define CLIENT_H_
+#ifndef CLIENT_CENTRAL_H_
+#define CLIENT_CENTRAL_H_
 
 #include <stdio.h>
 #include <sys/socket.h>
@@ -18,4 +18,4 @@ void requisita_temperatura(Servidor_Struct *servStruct);
 
 void fecha_cliente();
 
-#endif /* CLIENT_H_ */
+#endif /* CLIENT_CENTRAL_H_ */
