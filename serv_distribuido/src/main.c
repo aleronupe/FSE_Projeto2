@@ -17,6 +17,8 @@ pthread_t server_tid;
 
 void mata_threads() {
     main_struct.flag_run = 0;
+    fecha_conexoes();
+    sleep(1);
     fecha_conexoes_TCP();
     sleep(1);
     pthread_cancel(control_tid);

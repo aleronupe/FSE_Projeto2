@@ -18,32 +18,15 @@ void monta_cliente() {
     servidorAddr.sin_port = htons(servidorPorta);
 }
 
-void envia_mensagem_distribuido(int num_lamp) {
+void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos) {
     char mensagem[15];
 
     memset(mensagem, '\0', sizeof(mensagem));
 
-    switch (num_lamp) {
-        case 1:
-            strcpy(mensagem, "LIGA01");
-            break;
-        case 2:
-            strcpy(mensagem, "LIGA02");
-            break;
-        case 3:
-            strcpy(mensagem, "LIGA03");
-            break;
-        case 4:
-            strcpy(mensagem, "LIGA04");
-            break;
-        case 5:
-            strcpy(mensagem, "AR01");
-            break;
-        case 6:
-            strcpy(mensagem, "AR01");
-            break;
-    }
-    printf("O Que eu ia enviar: %s\n", mensagem);
+    mensagem[0] = cod_sinal;
+    mensagem[1] = estado_sinal ? '1' : '0';
+    mensagem[2] = pos;
+    // printf("O Que eu ia enviar: %s\n", mensagem);
 
     tamanhoMensagem = strlen(mensagem);
 
@@ -69,7 +52,7 @@ void envia_mensagem_distribuido(int num_lamp) {
         recv(clienteSocket, buffer, 30, 0);
         if (buffer[1] != '1') printf("Não recebeu o total de bytes enviados\n");
         sinalRecebido = buffer[0];
-        printf("[%s]\n", buffer);
+        // printf("[%s]\n", buffer);
         sleep(2);
     }
 

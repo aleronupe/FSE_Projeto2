@@ -1,7 +1,5 @@
 #include "painel.h"
 
-
-
 WINDOW *windowTempUmd, *windowEstadoAlarme;
 WINDOW *windowEstadoSensores, *windowEstadoEntradas;
 WINDOW *windowControleEntradas;
@@ -224,28 +222,32 @@ void atualizaInput(Servidor_Struct *servStruct) {
                     case 0:
                         servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
                         estadoEntradas[0] = estadoEntradas[0] ? 0 : 1;
-                        envia_mensagem_distribuido(1);
+                        envia_mensagem_distribuido('L', servStruct->lamp1, '1');
                         break;
                     case 1:
                         servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
                         estadoEntradas[1] = estadoEntradas[1] ? 0 : 1;
-                        envia_mensagem_distribuido(2);
+                        envia_mensagem_distribuido('L', servStruct->lamp2, '2');
                         break;
                     case 2:
                         servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
                         estadoEntradas[2] = estadoEntradas[2] ? 0 : 1;
+                        envia_mensagem_distribuido('L', servStruct->lamp3, '3');
                         break;
                     case 3:
                         servStruct->lamp4 = servStruct->lamp4 ? 0 : 1;
                         estadoEntradas[3] = estadoEntradas[3] ? 0 : 1;
+                        envia_mensagem_distribuido('L', servStruct->lamp4, '4');
                         break;
                     case 4:
                         servStruct->ar1 = servStruct->ar1 ? 0 : 1;
                         estadoEntradas[4] = estadoEntradas[4] ? 0 : 1;
+                        envia_mensagem_distribuido('A', servStruct->ar1, '1');
                         break;
                     case 5:
                         servStruct->ar2 = servStruct->ar2 ? 0 : 1;
                         estadoEntradas[5] = estadoEntradas[5] ? 0 : 1;
+                        envia_mensagem_distribuido('A', servStruct->ar2, '2');
                         break;
                     case 6:
                         servStruct->alarme = servStruct->alarme ? 0 : 1;

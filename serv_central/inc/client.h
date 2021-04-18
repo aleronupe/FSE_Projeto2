@@ -7,7 +7,7 @@
 
 #include "structures.h"
 
-void envia_mensagem_distribuido(int num_lamp);
+void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos);
 
 void monta_cliente();
 

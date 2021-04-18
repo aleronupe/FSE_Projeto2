@@ -16,33 +16,39 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     printf("o que recebeu foi:\n");
     printf("%s\n", buffer);
 
-    if (strcmp(buffer, "LIGA01") == 0) {
-        servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
-        liga_desliga_lamp_1(servStruct->lamp1);
-
-    } else if (strcmp(buffer, "LIGA02") == 0) {
-        servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
-        liga_desliga_lamp_2(servStruct->lamp2);
-
-    } else if (strcmp(buffer, "LIGA03") == 0) {
-        servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
-        liga_desliga_lamp_3(servStruct->lamp3);
-
-    } else if (strcmp(buffer, "LIGA03") == 0) {
-        servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
-        liga_desliga_lamp_3(servStruct->lamp3);
-
-    } else if (strcmp(buffer, "LIGA04") == 0) {
-        servStruct->lamp4 = servStruct->lamp4 ? 0 : 1;
-        liga_desliga_lamp_4(servStruct->lamp4);
-
-    } else if (strcmp(buffer, "AR01") == 0) {
-        servStruct->ar1 = servStruct->ar1 ? 0 : 1;
-        liga_desliga_ar_1(servStruct->ar1);
-
-    } else if (strcmp(buffer, "AR02") == 0) {
-        servStruct->ar2 = servStruct->ar2 ? 0 : 1;
-        liga_desliga_ar_2(servStruct->ar2);
+    switch (buffer[0]) {
+        case 'L':
+            switch (buffer[2]) {
+                case '1':
+                    servStruct->lamp1 = atoi(buffer[1]);
+                    liga_desliga_lamp_1(servStruct->lamp1);
+                    break;
+                case '2':
+                    servStruct->lamp2 = atoi(buffer[1]);
+                    liga_desliga_lamp_2(servStruct->lamp2);
+                    break;
+                case '3':
+                    servStruct->lamp3 = atoi(buffer[1]);
+                    liga_desliga_lamp_3(servStruct->lamp3);
+                    break;
+                case '4':
+                    servStruct->lamp4 = atoi(buffer[1]);
+                    liga_desliga_lamp_4(servStruct->lamp4);
+                    break;
+            }
+            break;
+        case 'A':
+            switch (buffer[2]) {
+                case '1':
+                    servStruct->ar1 = atoi(buffer[1]);
+                    liga_desliga_ar_1(servStruct->ar1);
+                    break;
+                case '2':
+                    servStruct->ar2 = atoi(buffer[1]);
+                    liga_desliga_ar_2(servStruct->ar2);
+                    break;
+            }
+            break;
     }
 
     if (send(socketCliente, envio, 30, 0) != 30)
