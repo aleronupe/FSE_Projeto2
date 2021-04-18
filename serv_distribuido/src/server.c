@@ -20,19 +20,19 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
         case 'L':
             switch (buffer[2]) {
                 case '1':
-                    servStruct->lamp1 = atoi(buffer[1]);
+                    servStruct->lamp1 = buffer[0] == '1' ? 1 : 0;
                     liga_desliga_lamp_1(servStruct->lamp1);
                     break;
                 case '2':
-                    servStruct->lamp2 = atoi(buffer[1]);
+                    servStruct->lamp2 = buffer[0] == '1' ? 1 : 0;
                     liga_desliga_lamp_2(servStruct->lamp2);
                     break;
                 case '3':
-                    servStruct->lamp3 = atoi(buffer[1]);
+                    servStruct->lamp3 = buffer[0] == '1' ? 1 : 0;
                     liga_desliga_lamp_3(servStruct->lamp3);
                     break;
                 case '4':
-                    servStruct->lamp4 = atoi(buffer[1]);
+                    servStruct->lamp4 = buffer[0] == '1' ? 1 : 0;
                     liga_desliga_lamp_4(servStruct->lamp4);
                     break;
             }
@@ -40,11 +40,11 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
         case 'A':
             switch (buffer[2]) {
                 case '1':
-                    servStruct->ar1 = atoi(buffer[1]);
+                    servStruct->ar1 = buffer[0] == '1' ? 1 : 0;
                     liga_desliga_ar_1(servStruct->ar1);
                     break;
                 case '2':
-                    servStruct->ar2 = atoi(buffer[1]);
+                    servStruct->ar2 = buffer[0] == '1' ? 1 : 0;
                     liga_desliga_ar_2(servStruct->ar2);
                     break;
             }
