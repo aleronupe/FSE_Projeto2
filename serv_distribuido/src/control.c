@@ -28,6 +28,8 @@ void controle_temp(void *args) {
         printf("Temperatura: %lf\n", temp);
         printf("Temperatura: %lf\n", hum);
 
+	sleep(3);
+
         /* GPIO */
         // liga_desliga_lamp_1(servStruct->lamp1);
         // sleep(1);
