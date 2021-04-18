@@ -95,7 +95,7 @@ void monta_servidor(void *args) {
             servStruct->tipo_mensagem = 5;
         } else {
             // printf("Conexão estabelecida\n");
-            char *aviso = {"Conexão estabelecida"};
+            char aviso[40];
             sprintf(aviso, "Conexão do ;Cliente;%s",
                     inet_ntoa(clienteAddr.sin_addr));
             strcpy(servStruct->mensagem, aviso);
