@@ -55,30 +55,25 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         recv(clienteTempSocket, buffer, 30, 0);
         if (buffer[0] == 'T') {
             float temp, hum;
-            bzero(buffer, 30);
-            recv(clienteTempSocket, buffer, 30, 0);
-            sscanf(buffer, "%f", &temp);
-            printf("[%s]\n", buffer);
-
-            bzero(buffer, 30);
-            recv(clienteTempSocket, buffer, 30, 0);
-            sscanf(buffer, "%f", &hum);
-            printf("[%s]\n", buffer);
+            char* token = strtok(buffer, ";");
+            token = strtok(NULL, ";");
+            sscanf(token, "%f", &temp);
+            token = strtok(NULL, ";");
+            sscanf(token, "%f", &hum);
 
             servStruct->temp = temp;
             servStruct->hum = hum;
 
-            // printf("A Temperatura setada: %f\n", servStruct->temp);
-            // printf("A Umidade setada: %f\n", servStruct->hum);
+            printf("A Temperatura setada: %f\n", servStruct->temp);
+            printf("A Umidade setada: %f\n", servStruct->hum);
 
         } else if (buffer[0] == '1') {
-            // printf("Começou com 1\n");
+            printf("Começou com 1\n");
             sinalRecebido = buffer[0];
-            // printf("[%s]\n", buffer);
+            printf("[%s]\n", buffer);
         } else {
-            // printf("Não recebeu o total de bytes enviados\n");
-            // printf("[%s]\n", buffer);
-
+            printf("Não recebeu o total de bytes enviados\n");
+            printf("[%s]\n", buffer);
         }
         sleep(2);
     }
