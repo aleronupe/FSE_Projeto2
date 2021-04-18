@@ -2,7 +2,7 @@
 
 WINDOW *windowTempUmd, *windowEstadoAlarme;
 WINDOW *windowEstadoSensores, *windowEstadoEntradas;
-WINDOW *windowControleEntradas;
+WINDOW *windowControleEntradas, *windowMensagens;
 int pos = 0;
 int estadoEntradas[7] = {0};
 
@@ -15,6 +15,8 @@ void iniciaTela() {
     curs_set(0);
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_YELLOW, COLOR_BLACK);
 }
 
 void desliga_telas() {
@@ -23,6 +25,7 @@ void desliga_telas() {
     delwin(windowEstadoAlarme);
     delwin(windowTempUmd);
     delwin(windowControleEntradas);
+    delwin(windowMensagens);
     echo();
     nocbreak();
     endwin();
@@ -281,13 +284,25 @@ void atualizaInput(Servidor_Struct *servStruct) {
     wrefresh(windowControleEntradas);  // update the terminal screen
 }
 
+void atualizaMensagem(Servidor_Struct *servStruct) {
+    box(windowMensagens, 0, 0);
+    mvwprintw(windowMensagens, 0, 6, " Mensagens ");
+
+    wattron(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem));
+    mvwprintw(windowMensagens, 3, 2, "%s", servStruct->mensagem);
+    wattroff(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem ));
+
+    wrefresh(windowMensagens);
+}
+
 void carregaMenu(void *args) {
     Servidor_Struct *servStruct = (Servidor_Struct *)args;
     windowEstadoEntradas = newwin(12, 50, 1, 1);
     windowEstadoSensores = newwin(12, 55, 1, 52);
     windowEstadoAlarme = newwin(6, 32, 13, 1);
     windowTempUmd = newwin(6, 32, 19, 1);
-    windowControleEntradas = newwin(12, 73, 13, 34);
+    windowControleEntradas = newwin(12, 47, 13, 60);
+    windowMensagens = newwin(12, 25, 13, 34);
 
     while (servStruct->flag_run) {
         pintaWindowEstadoEntradas();
@@ -301,6 +316,7 @@ void carregaMenu(void *args) {
         atualizaWindowEstadoAlarme(servStruct);
         atualizaWindowTempUmidade(servStruct);
         atualizaInput(servStruct);
+        atualizaMensagem(servStruct);
     }
 
     // pthread_join(input_tid, NULL);

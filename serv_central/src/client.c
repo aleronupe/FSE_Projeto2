@@ -35,10 +35,16 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     int try = 1;
     while (try) {
         if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
-                    sizeof(servidorAddr)) < 0)
-            printf("Erro no connect()\n");
-        else
+                    sizeof(servidorAddr)) < 0) {
+            strcpy(servStruct->mensagem, "Aguardando Servidor\nDistribuido");
+            servStruct->tipo_mensagem = 2;
+            sleep(1);
+        }
+        else{ 
+            strcpy(servStruct->mensagem, "Conexão Estabelecida");
+            servStruct->tipo_mensagem = 1;
             try = 0;
+        }
     }
 
     // Enviar Mensagem
@@ -117,9 +123,8 @@ void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos) {
     while (sinalRecebido != '1') {
         bzero(buffer, 30);
         recv(clienteSocket, buffer, 30, 0);
-        if (buffer[1] != '1') printf("Não recebeu o total de bytes enviados\n");
+        if (buffer[0] != '1') printf("Não recebeu o total de bytes enviados\n");
         sinalRecebido = buffer[0];
-        // printf("[%s]\n", buffer);
         sleep(2);
     }
 
