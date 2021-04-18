@@ -9,25 +9,28 @@ struct bme280_dev dev;
 void inicia_conexoes() {
     /************ Configuração ************/
     /* Configuração do I2C */
-    monta_i2c(&dev, &id_i2c);
-    abre_i2c(&dev, &id_i2c);
-    inicializa_bme280_i2c(&dev);
-    configura_bme280_i2c(&dev);
+   // monta_i2c(&dev, &id_i2c);
+   // abre_i2c(&dev, &id_i2c);
+   // inicializa_bme280_i2c(&dev);
+   // configura_bme280_i2c(&dev);
 
     /* Configuração do GPIO */
     configura_GPIO();
 }
 
 void le_temp_e_umid( double *temp, double *hum) {
-        le_temp_bme280_i2c(&dev, temp, hum);
-        printf("Temperatura: %.4lf\n", *temp);
+        //le_temp_bme280_i2c(&dev, temp, hum);
+        *temp = 25.6756;
+	*hum = 56.7654;
+	
+	printf("Temperatura: %.4lf\n", *temp);
         printf("Umidade: %.4lf\n", *hum);    
 }
 
 void fecha_conexoes() {
     /* Finalização do I2C */
     printf("Finalizando conexão com I2C...\n");
-    close(id_i2c.fd);
+    // close(id_i2c.fd);
     printf("Finalizado!\n");
 
     /* Finalização do GPIO */
