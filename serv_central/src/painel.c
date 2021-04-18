@@ -17,6 +17,9 @@ void iniciaTela() {
     nodelay(stdscr, TRUE);
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(3, COLOR_BLUE, COLOR_BLACK);
+    init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(5, COLOR_RED, COLOR_BLACK);
 }
 
 void desliga_telas() {
@@ -287,10 +290,17 @@ void atualizaInput(Servidor_Struct *servStruct) {
 void atualizaMensagem(Servidor_Struct *servStruct) {
     box(windowMensagens, 0, 0);
     mvwprintw(windowMensagens, 0, 6, " Mensagens ");
+    char *token = strtok(servStruct->mensagem, ";");
+
+    int cont = 0;
 
     wattron(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem));
-    mvwprintw(windowMensagens, 3, 2, "%s", servStruct->mensagem);
-    wattroff(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem ));
+    while (token != NULL) {
+        mvwprintw(windowMensagens, 3 + cont, 2, "%-22s", token);
+        cont += 1;
+        token = strtok(NULL, ";");
+    }
+    wattroff(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem));
 
     wrefresh(windowMensagens);
 }

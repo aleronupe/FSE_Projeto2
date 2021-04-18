@@ -7,7 +7,6 @@
 
 #include "structures.h"
 
-
 void monta_cliente();
 
 void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos);

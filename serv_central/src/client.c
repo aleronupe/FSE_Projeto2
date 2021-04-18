@@ -36,13 +36,12 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     while (try) {
         if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
                     sizeof(servidorAddr)) < 0) {
-            strcpy(servStruct->mensagem, "Aguardando Servidor\nDistribuido");
+            strcpy(servStruct->mensagem, "Aguardando;Servidor;Distribuido");
             servStruct->tipo_mensagem = 2;
             sleep(1);
-        }
-        else{ 
-            strcpy(servStruct->mensagem, "Conexão Estabelecida");
-            servStruct->tipo_mensagem = 1;
+        } else {
+            strcpy(servStruct.mensagem, "Conexão;Estabelecida; ");
+            servStruct.tipo_mensagem = 1;
             try = 0;
         }
     }

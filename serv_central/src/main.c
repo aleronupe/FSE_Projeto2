@@ -15,7 +15,8 @@
 Servidor_Struct servStruct;
 
 void mata_threads() {
-    printf("Matou o processo\n");
+    strcpy(servStruct.mensagem, "Matou o;processo; ");
+    servStruct.tipo_mensagem = 5;
     servStruct.flag_run = 0;
     sleep(1);
     desliga_telas();
@@ -61,11 +62,15 @@ int main(int argc, const char *argv[]) {
     // pthread_t server_tid;
 
     pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void *)&servStruct);
-    // pthread_create(&server_tid, NULL, (void *)monta_servidor, (void *)&servStruct);
-    
+    // pthread_create(&server_tid, NULL, (void *)monta_servidor, (void
+    // *)&servStruct);
+
     while (servStruct.flag_run == 1) {
-        sleep(1);
+        // strcpy(servStruct.mensagem, "Inicializa;Servidor;Central;");
+        // servStruct.tipo_mensagem = 1;
+        
         requisita_temperatura(&servStruct);
+        usleep(800000);
     }
 
     pthread_join(menu_tid, NULL);
