@@ -91,7 +91,7 @@ void monta_servidor(void *args) {
             strcpy(servStruct->mensagem, "Falha no;Accept");
             servStruct->tipo_mensagem = 5;
         } else {
-            char *aviso;
+            char *aviso = {};
             sprintf(aviso, "Conexão do ;Cliente;%s",
                     inet_ntoa(clienteAddr.sin_addr));
             strcpy(servStruct->mensagem, aviso);
