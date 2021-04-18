@@ -20,11 +20,6 @@ void monta_cliente() {
     // Criar Socket
     if ((clienteSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
         printf("Erro no socket()\n");
-
-    // Connect
-    if (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
-                sizeof(servidorAddr)) < 0)
-        printf("Erro no connect()\n");
 }
 
 void envia_mensagem_distribuido(int num_lamp) {
@@ -56,6 +51,11 @@ void envia_mensagem_distribuido(int num_lamp) {
 
     tamanhoMensagem = strlen(mensagem);
 
+    // Connect
+    if (connect(clienteSocket, (struct sockaddr *)&servidorAddr,
+                sizeof(servidorAddr)) < 0)
+        printf("Erro no connect()\n");
+
     if (send(clienteSocket, mensagem, tamanhoMensagem, 0) != tamanhoMensagem)
         printf(
             "Erro no envio: numero de bytes enviados diferente do esperado\n");
@@ -64,13 +64,13 @@ void envia_mensagem_distribuido(int num_lamp) {
 
     while (sinalRecebido != '1') {
         bzero(buffer, 30);
-        recv(clienteSocket, buffer, 30 - 1, 0);
+        recv(clienteSocket, buffer, 30, 0);
         if (buffer[1] != '1') printf("Não recebeu o total de bytes enviados\n");
         sinalRecebido = buffer[0];
         printf("[%s]\n", buffer);
         sleep(2);
     }
-    // close(clienteSocket);
+    close(clienteSocket);
 }
 
 void fecha_cliente() { close(clienteSocket); }

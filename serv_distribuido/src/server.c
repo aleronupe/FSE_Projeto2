@@ -48,6 +48,8 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     if (send(socketCliente, envio, 30, 0) != 30)
         printf("Erro no envio - send()\n");
 
+    printf("Finaliza recepção de dados do cliente\n");
+    
     // while (tamanhoRecebido > 0) {
     //     if (send(socketCliente, envio, 30, 0) != 30)
     //         printf("Erro no envio - send()\n");
@@ -89,6 +91,7 @@ void monta_servidor(void *args) {
 
     while (!conexaoEstabelecida && servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
+        printf("Prepara para aceitar cliente\n");
         if ((socketCliente =
                  accept(servidorSocket, (struct sockaddr *)&clienteAddr,
                         &clienteLength)) < 0)
