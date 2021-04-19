@@ -295,7 +295,8 @@ void atualizaInput(Servidor_Struct *servStruct) {
 void atualizaMensagem(Servidor_Struct *servStruct) {
     box(windowMensagens, 0, 0);
     mvwprintw(windowMensagens, 0, 6, " Mensagens ");
-    char *token = strtok(servStruct->mensagem, ";");
+    char token[100];
+    strcpy(token, strtok(servStruct->mensagem, ";"));
 
     int cont = 0;
 
@@ -303,7 +304,7 @@ void atualizaMensagem(Servidor_Struct *servStruct) {
     while (token != NULL) {
         mvwprintw(windowMensagens, 3 + cont, 2, "%-22s", token);
         cont += 1;
-        token = strtok(NULL, ";");
+        strcpy(token, strtok(NULL, ";"));
     }
     wattroff(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem));
 

@@ -8,6 +8,7 @@
 
 #include "clientDistribuido.h"
 #include "control.h"
+#include "gpio.h"
 #include "serverDistribuido.h"
 #include "structures.h"
 
@@ -33,10 +34,16 @@ int main(int argc, const char *argv[]) {
     inicia_conexoes();
     monta_cliente();
 
+    char mensagem_inicial[25];
+
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&main_struct);
 
     pthread_detach(server_tid);
+
+    memset(mensagem_inicial, '\0', sizeof(mensagem_inicial));
+    read_sensors_init(mensagem_inicial);
+    envia_mensagem_inicial(mensagem_inicial, &main_struct);
 
     while (main_struct.flag_run == 1) {
         sleep(1);

@@ -1,6 +1,7 @@
 #include "clientDistribuido.h"
 
 int clienteSocket;
+int clienteInitialSocket;
 struct sockaddr_in servidorAddr;
 unsigned short servidorPorta = 10010;
 char IP_Servidor[15] = {"192.168.0.53"};
@@ -55,6 +56,55 @@ void envia_mensagem_central(char cod_sinal, char pos, int estado_sinal) {
     close(clienteSocket);
 }
 
+void envia_mensagem_inicial(char *initial_message,
+                            Servidor_Struct *servStruct) {
+    char buffer[30];
+    unsigned int tamanhoMensagem;
+    char mensagem[30];
+
+    memset(mensagem, '\0', sizeof(mensagem));
+    strcpy(mensagem, initial_message);
+    tamanhoMensagem = strlen(mensagem);
+
+    // Criar Socket
+    if ((clienteInitialSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+        printf("Erro no socket()\n");
+
+    // Connect
+    int try = 1;
+    while (try && servStruct->flag_run) {
+        if (connect(clienteInitialSocket, (struct sockaddr *)&servidorAddr,
+                    sizeof(servidorAddr)) < 0) {
+            printf("Não conectou ao servidor inicial\n");
+            sleep(1);
+        } else {
+            printf("Conexão Estabelecida\n");
+            try = 0;
+        }
+    }
+
+    // Enviar Mensagem
+    if (send(clienteInitialSocket, mensagem, tamanhoMensagem, 0) !=
+        tamanhoMensagem)
+        printf(
+            "Erro no envio: numero de bytes enviados diferente do esperado\n");
+
+    char sinalRecebido = '0';
+
+    // Receber Mensagem
+    while (sinalRecebido != '1') {
+        bzero(buffer, 30);
+        recv(clienteInitialSocket, buffer, 30, 0);
+        if (buffer[0] != '1') printf("Não recebeu o total de bytes enviados\n");
+        sinalRecebido = buffer[0];
+        sleep(2);
+    }
+
+    // Fechar Conexão
+    close(clienteInitialSocket);
+}
+
 void fecha_cliente() {
     close(clienteSocket);
+    close(clienteInitialSocket);
 }

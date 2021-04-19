@@ -19,6 +19,44 @@
 #define PIN_ABER_05 28
 #define PIN_ABER_06 29
 
+void read_sensors_init(char *message) {
+    int estado;
+    char estadoTxt[2];
+    strcpy(message, "F;");
+    
+    estado = digitalRead(PIN_PRES_01);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_PRES_02);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_ABER_01);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_ABER_02);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_ABER_03);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_ABER_04);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_ABER_05);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+
+    estado = digitalRead(PIN_ABER_06);
+    sprintf(estadoTxt, "%d;", estado);
+    strcat(message, estadoTxt);
+}
+
 void handle_pres_1(void) {
     int estado = digitalRead(PIN_PRES_01);
     if (estado) {

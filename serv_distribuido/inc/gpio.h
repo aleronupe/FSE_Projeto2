@@ -25,4 +25,6 @@ void liga_desliga_ar_2(int estado);
 
 void desativa_circuito_de_potencia();
 
+void read_sensors_init(char *message);
+
 #endif /* GPIO_H_ */
