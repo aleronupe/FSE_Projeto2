@@ -45,8 +45,11 @@ int main(int argc, const char *argv[]) {
     memset(mensagem_inicial, '\0', sizeof(mensagem_inicial));
     read_sensors_init(mensagem_inicial);
     int flag_done = 1;
-    while (flag_done && main_struct.flag_run) {
-        envia_mensagem_inicial(mensagem_inicial, &main_struct, &flag_done);
+    while (main_struct.flag_run) {
+        if (flag_done) {
+            envia_mensagem_inicial(mensagem_inicial, &main_struct, &flag_done);
+        }
+        sleep(1);
     }
 
     mata_threads();
