@@ -19,7 +19,7 @@ void mata_threads() {
     servStruct.tipo_mensagem = 5;
     servStruct.flag_run = 0;
     sleep(1);
-    // desliga_telas();
+    desliga_telas();
     fecha_conexoes_TCP();
     fecha_cliente();
     exit(0);
@@ -55,35 +55,35 @@ int main(int argc, const char *argv[]) {
     strcpy(servStruct.mensagem, "Estado Inicial");
     servStruct.tipo_mensagem = 1;
 
-    // iniciaTela();
+    iniciaTela();
     monta_cliente();
 
-    // pthread_t menu_tid;
+    pthread_t menu_tid;
     pthread_t server_tid;
 
     printf("COmeçou");
 
-    // pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void
-    // *)&servStruct);
+    pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void
+    *)&servStruct);
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&servStruct);
 
     abre_ou_cria_csv();
     while (servStruct.flag_run == 1) {
         requisita_temperatura(&servStruct);
-        // usleep(800000);
-        sleep(1);
-        printf("servStruct.sensorPres1: %d\n", servStruct.sensorPres1);
-        printf("servStruct.sensorPres2: %d\n", servStruct.sensorPres2);
-        printf("servStruct.sensorAbrt1: %d\n", servStruct.sensorAbrt1);
-        printf("servStruct.sensorAbrt2: %d\n", servStruct.sensorAbrt2);
-        printf("servStruct.sensorAbrt3: %d\n", servStruct.sensorAbrt3);
-        printf("servStruct.sensorAbrt4: %d\n", servStruct.sensorAbrt4);
-        printf("servStruct.sensorAbrt5: %d\n", servStruct.sensorAbrt5);
-        printf("servStruct.sensorAbrt6: %d\n", servStruct.sensorAbrt6);
+        usleep(800000);
+        // sleep(1);
+        // printf("servStruct.sensorPres1: %d\n", servStruct.sensorPres1);
+        // printf("servStruct.sensorPres2: %d\n", servStruct.sensorPres2);
+        // printf("servStruct.sensorAbrt1: %d\n", servStruct.sensorAbrt1);
+        // printf("servStruct.sensorAbrt2: %d\n", servStruct.sensorAbrt2);
+        // printf("servStruct.sensorAbrt3: %d\n", servStruct.sensorAbrt3);
+        // printf("servStruct.sensorAbrt4: %d\n", servStruct.sensorAbrt4);
+        // printf("servStruct.sensorAbrt5: %d\n", servStruct.sensorAbrt5);
+        // printf("servStruct.sensorAbrt6: %d\n", servStruct.sensorAbrt6);
     }
 
-    // pthread_join(menu_tid, NULL);
+    pthread_join(menu_tid, NULL);
     pthread_join(server_tid, NULL);
 
     mata_threads();

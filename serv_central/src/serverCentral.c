@@ -23,38 +23,39 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
         case 'P':
             switch (buffer[1]) {
                 case '1':
-                    servStruct->sensorPres1 = buffer[2];
+                    servStruct->sensorPres1 = (buffer[2] == '1') ? 1 : 0;
                     break;
                 case '2':
-                    servStruct->sensorPres2 = buffer[2];
+                    servStruct->sensorPres2 = (buffer[2] == '1') ? 1 : 0;
                     break;
             }
+            ativaDesativaAlarme(servStruct, buffer[2]);
             break;
         case 'A':
             switch (buffer[1]) {
                 case '1':
-                    servStruct->sensorAbrt1 = buffer[2];
+                    servStruct->sensorAbrt1 = (buffer[2] == '1') ? 1 : 0;
                     break;
                 case '2':
-                    servStruct->sensorAbrt2 = buffer[2];
+                    servStruct->sensorAbrt2 = (buffer[2] == '1') ? 1 : 0;
                     break;
                 case '3':
-                    servStruct->sensorAbrt3 = buffer[2];
+                    servStruct->sensorAbrt3 = (buffer[2] == '1') ? 1 : 0;
                     break;
                 case '4':
-                    servStruct->sensorAbrt4 = buffer[2];
+                    servStruct->sensorAbrt4 = (buffer[2] == '1') ? 1 : 0;
                     break;
                 case '5':
-                    servStruct->sensorAbrt5 = buffer[2];
+                    servStruct->sensorAbrt5 = (buffer[2] == '1') ? 1 : 0;
                     break;
                 case '6':
-                    servStruct->sensorAbrt6 = buffer[2];
+                    servStruct->sensorAbrt6 = (buffer[2] == '1') ? 1 : 0;
                     break;
             }
+            ativaDesativaAlarme(servStruct, buffer[2]);
             break;
+        // case 'F':
     }
-
-    ativaDesativaAlarme(servStruct, buffer[2]);
 
     if (send(socketCliente, envio, 30, 0) != 30)
         printf("Erro no envio - send()\n");
