@@ -4,7 +4,7 @@ int clienteSocket;
 int clienteTempSocket;
 struct sockaddr_in servidorAddr;
 unsigned short servidorPorta = 10110;
-char IP_Servidor[15] = {"192.168.0.52"};
+char IP_Servidor[15] = {"192.168.0.4"};
 
 void monta_cliente() {
     // Construir struct sockaddr_in
