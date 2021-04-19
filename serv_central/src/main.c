@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]) {
     pthread_t menu_tid;
     pthread_t server_tid;
 
-    printf("COmeçou");
+    // printf("COmeçou");
 
     pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void
     *)&servStruct);
