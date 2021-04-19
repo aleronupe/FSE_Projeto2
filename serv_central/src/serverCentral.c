@@ -90,16 +90,6 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt6 = value;
-
-            printf("servStruct->sensorPres1: %d\n", servStruct->sensorPres1);
-            printf("servStruct->sensorPres2: %d\n", servStruct->sensorPres2);
-            printf("servStruct->sensorAbrt1: %d\n", servStruct->sensorAbrt1);
-            printf("servStruct->sensorAbrt2: %d\n", servStruct->sensorAbrt2);
-            printf("servStruct->sensorAbrt3: %d\n", servStruct->sensorAbrt3);
-            printf("servStruct->sensorAbrt4: %d\n", servStruct->sensorAbrt4);
-            printf("servStruct->sensorAbrt5: %d\n", servStruct->sensorAbrt5);
-            printf("servStruct->sensorAbrt6: %d\n", servStruct->sensorAbrt6);
-
             break;
     }
 
