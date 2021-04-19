@@ -123,28 +123,28 @@ void configura_GPIO() {
     softPwmCreate(PWM_PIN_AR_02, 1, 100);
 
     /* Configura Sensores */
-    pinMode(PIN_PRES_01, INPUT);
+    // pinMode(PIN_PRES_01, INPUT);
     wiringPiISR(PIN_PRES_01, INT_EDGE_BOTH, &handle_pres_1);
 
-    pinMode(PIN_PRES_02, INPUT);
+    // pinMode(PIN_PRES_02, INPUT);
     wiringPiISR(PIN_PRES_02, INT_EDGE_BOTH, &handle_pres_2);
 
-    pinMode(PIN_ABER_01, INPUT);
+    // pinMode(PIN_ABER_01, INPUT);
     wiringPiISR(PIN_ABER_01, INT_EDGE_BOTH, &handle_aber_1);
 
-    pinMode(PIN_ABER_02, INPUT);
+    // pinMode(PIN_ABER_02, INPUT);
     wiringPiISR(PIN_ABER_02, INT_EDGE_BOTH, &handle_aber_2);
 
-    pinMode(PIN_ABER_03, INPUT);
+    // pinMode(PIN_ABER_03, INPUT);
     wiringPiISR(PIN_ABER_03, INT_EDGE_BOTH, &handle_aber_3);
 
-    pinMode(PIN_ABER_04, INPUT);
+    // pinMode(PIN_ABER_04, INPUT);
     wiringPiISR(PIN_ABER_04, INT_EDGE_BOTH, &handle_aber_4);
 
-    pinMode(PIN_ABER_05, INPUT);
+    // pinMode(PIN_ABER_05, INPUT);
     wiringPiISR(PIN_ABER_05, INT_EDGE_BOTH, &handle_aber_5);
 
-    pinMode(PIN_ABER_06, INPUT);
+    // pinMode(PIN_ABER_06, INPUT);
     wiringPiISR(PIN_ABER_06, INT_EDGE_BOTH, &handle_aber_6);
 }
 
