@@ -70,7 +70,7 @@ int main(int argc, const char *argv[]) {
     abre_ou_cria_csv();
     while (servStruct.flag_run == 1) {
         requisita_temperatura(&servStruct);
-        usleep(800000);
+        usleep(500000);
     }
 
     mata_threads();

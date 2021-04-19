@@ -5,7 +5,8 @@ int socketCliente;
 
 void ativaDesativaAlarme(Servidor_Struct *servStruct, char sinalSensor) {
     if (servStruct->alarme && sinalSensor == '1') {
-        servStruct->sinalAlarme = 0;
+        servStruct->sinalAlarme = 1;
+        servStruct->tipo_mensagem = 8;
     }
 }
 
@@ -13,7 +14,7 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     char buffer[30];
     char *token = {"novos dados"};
     int value;
-    char envio[30] = {"1Menino, não é que veio?1"};
+    char envio[30] = {"1Veio1"};
     int tamanhoRecebido;
 
     memset(buffer, '\0', sizeof(buffer));
@@ -129,7 +130,6 @@ void monta_servidor(void *args) {
 
     while (servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
-        // printf("Pronto para Aceitar cliente\n");
         servStruct->tipo_mensagem = 4;
         if ((socketCliente =
                  accept(servidorSocket, (struct sockaddr *)&clienteAddr,

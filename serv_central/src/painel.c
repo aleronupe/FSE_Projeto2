@@ -228,43 +228,58 @@ void atualizaInput(Servidor_Struct *servStruct) {
                     case 0:
                         servStruct->lamp1 = servStruct->lamp1 ? 0 : 1;
                         estadoEntradas[0] = estadoEntradas[0] ? 0 : 1;
+                        
+                        servStruct->tipo_mensagem = 7;
                         envia_mensagem_distribuido('L', servStruct->lamp1, '1');
                         escreve_csv(servStruct->lamp1, "Lampada", "1");
+                        servStruct->tipo_mensagem = 8;
                         break;
                     case 1:
                         servStruct->lamp2 = servStruct->lamp2 ? 0 : 1;
                         estadoEntradas[1] = estadoEntradas[1] ? 0 : 1;
+                        servStruct->tipo_mensagem = 7;
                         envia_mensagem_distribuido('L', servStruct->lamp2, '2');
                         escreve_csv(servStruct->lamp2, "Lampada", "2");
+                        servStruct->tipo_mensagem = 8;
                         break;
                     case 2:
                         servStruct->lamp3 = servStruct->lamp3 ? 0 : 1;
                         estadoEntradas[2] = estadoEntradas[2] ? 0 : 1;
+                        servStruct->tipo_mensagem = 7;
                         envia_mensagem_distribuido('L', servStruct->lamp3, '3');
                         escreve_csv(servStruct->lamp3, "Lampada", "3");
+                        servStruct->tipo_mensagem = 8;
                         break;
                     case 3:
                         servStruct->lamp4 = servStruct->lamp4 ? 0 : 1;
                         estadoEntradas[3] = estadoEntradas[3] ? 0 : 1;
+                        servStruct->tipo_mensagem = 7;
                         envia_mensagem_distribuido('L', servStruct->lamp4, '4');
                         escreve_csv(servStruct->lamp4, "Lampada", "4");
+                        servStruct->tipo_mensagem = 8;
                         break;
                     case 4:
                         servStruct->ar1 = servStruct->ar1 ? 0 : 1;
                         estadoEntradas[4] = estadoEntradas[4] ? 0 : 1;
+                        servStruct->tipo_mensagem = 7;
                         envia_mensagem_distribuido('A', servStruct->ar1, '1');
                         escreve_csv(servStruct->ar1, "Ar Condicionado", "1");
+                        servStruct->tipo_mensagem = 8;
                         break;
                     case 5:
                         servStruct->ar2 = servStruct->ar2 ? 0 : 1;
                         estadoEntradas[5] = estadoEntradas[5] ? 0 : 1;
+                        servStruct->tipo_mensagem = 7;
                         envia_mensagem_distribuido('A', servStruct->ar2, '2');
                         escreve_csv(servStruct->ar2, "Ar Condicionado", "2");
+                        servStruct->tipo_mensagem = 8;
                         break;
                     case 6:
                         servStruct->alarme = servStruct->alarme ? 0 : 1;
+                        servStruct->sinalAlarme =
+                            servStruct->alarme ? servStruct->sinalAlarme : 0;
                         estadoEntradas[6] = estadoEntradas[6] ? 0 : 1;
-                        escreve_csv(servStruct->alarme, "Alarme", "2");
+                        escreve_csv(servStruct->alarme, "Alarme", "-");
                         break;
                     case 7:
                         servStruct->flag_run = 0;
@@ -339,11 +354,32 @@ void atualizaMensagem(Servidor_Struct *servStruct) {
             mvwprintw(windowMensagens, 5, 2, "%-22s", "Com Cliente ");
             wattroff(windowMensagens, COLOR_PAIR(1));
             break;
+        case 7:
+            wattron(windowMensagens, COLOR_PAIR(3));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Aguarde...");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Conectando");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", "ao Servidor ");
+            wattroff(windowMensagens, COLOR_PAIR(3));
+            break;
+        case 8:
+            wattron(windowMensagens, COLOR_PAIR(4));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Conexão");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Finalizada");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(4));
+            break;
         case 9:
             wattron(windowMensagens, COLOR_PAIR(5));
             mvwprintw(windowMensagens, 3, 2, "%-22s", "Matou o");
             mvwprintw(windowMensagens, 4, 2, "%-22s", "Processo");
             mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(5));
+            break;
+        case 10:
+            wattron(windowMensagens, COLOR_PAIR(5));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "ALERTA:");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "ALARME");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", "ATIVADOA ");
             wattroff(windowMensagens, COLOR_PAIR(5));
             break;
     }

@@ -5,7 +5,7 @@ int socketCliente;
 
 void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     char buffer[15];
-    char envio[30] = {"1Menino, não é que veio?1"};
+    char envio[30] = {"1Veio1"};
     double temp, hum;
     char temp_buf[10], hum_buf[10], envio_temp_hum[30];
     int tamanhoRecebido;
