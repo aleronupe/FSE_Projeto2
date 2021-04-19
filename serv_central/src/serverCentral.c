@@ -3,6 +3,12 @@
 int servidorSocket;
 int socketCliente;
 
+void ativaDesativaAlarme(Servidor_Struct *servStruct, char sinalSensor){
+    if(servStruct->alarme && sinalSensor == '1'){
+        servStruct->sinalAlarme = 0;
+    }
+}
+
 void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     char buffer[15];
     char envio[30] = {"1Menino, não é que veio?1"};
@@ -47,6 +53,8 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             }
             break;
     }
+
+    ativaDesativaAlarme(servStruct, buffer[2]);
 
     if (send(socketCliente, envio, 30, 0) != 30)
         printf("Erro no envio - send()\n");
