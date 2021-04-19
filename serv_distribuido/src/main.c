@@ -13,7 +13,7 @@
 #include "structures.h"
 
 Servidor_Struct main_struct;
-// pthread_t server_tid;
+pthread_t server_tid;
 
 void mata_threads() {
     main_struct.flag_run = 0;
