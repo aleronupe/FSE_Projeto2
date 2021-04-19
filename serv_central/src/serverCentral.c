@@ -11,7 +11,7 @@ void ativaDesativaAlarme(Servidor_Struct *servStruct, char sinalSensor) {
 
 void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     char buffer[30];
-    char token[5];
+    char *token = {"novos dados"};
     int value;
     char envio[30] = {"1Menino, não é que veio?1"};
     int tamanhoRecebido;
@@ -57,37 +57,37 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             ativaDesativaAlarme(servStruct, buffer[2]);
             break;
         case 'F':
-            strtok(buffer, ";");
+            token = strtok(buffer, ";");
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorPres1 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorPres2 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt1 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt2 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt3 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt4 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt5 = value;
 
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt6 = value;
 

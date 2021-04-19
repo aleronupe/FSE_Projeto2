@@ -61,12 +61,10 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         // printf("[%s]\n", buffer);
         if (buffer[0] == 'T') {
             float temp, hum;
-            char token[15];
-            strtok(buffer, ";");
-            strcpy(token, strtok(NULL, ";"));
+            char *token = strtok(buffer, ";");
+            token = strtok(NULL, ";");
             sscanf(token, "%f", &temp);
-
-            strcpy(token, strtok(NULL, ";"));
+            token = strtok(NULL, ";");
             sscanf(token, "%f", &hum);
 
             servStruct->temp = temp;
