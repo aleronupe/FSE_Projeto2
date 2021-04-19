@@ -19,11 +19,11 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     char buffer[30];
     unsigned int tamanhoMensagem;
     char mensagem[15];
+    char sinalRecebido = '0';
 
     memset(mensagem, '\0', sizeof(mensagem));
 
     mensagem[0] = 'T';
-    // printf("O Que eu ia enviar: %s\n", mensagem);
 
     tamanhoMensagem = strlen(mensagem);
 
@@ -42,16 +42,12 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
     // Enviar Mensagem
     if (send(clienteTempSocket, mensagem, tamanhoMensagem, 0) !=
         tamanhoMensagem)
-        printf(
-            "Erro no envio: numero de bytes enviados diferente do esperado\n");
-
-    char sinalRecebido = '0';
+        sinalRecebido = '1';
 
     // Receber Mensagem
     while (sinalRecebido != '1') {
         bzero(buffer, 30);
         recv(clienteTempSocket, buffer, 30, 0);
-        // printf("[%s]\n", buffer);
         if (buffer[0] == 'T') {
             float temp, hum;
             char *token = strtok(buffer, ";");
@@ -62,19 +58,9 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
 
             servStruct->temp = temp;
             servStruct->hum = hum;
-
-            // printf("A Temperatura setada: %f\n", servStruct->temp);
-            // printf("A Umidade setada: %f\n", servStruct->hum);
-
         } else if (buffer[0] == '1') {
-            // printf("Começou com 1\n");
             sinalRecebido = buffer[0];
-            // printf("[%s]\n", buffer);
         }
-        // else {
-        //     // printf("Não recebeu o total de bytes enviados\n");
-        //     // printf("[%s]\n", buffer);
-        // }
         sleep(2);
     }
 
