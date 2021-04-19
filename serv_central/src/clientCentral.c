@@ -32,16 +32,11 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         printf("Erro no socket()\n");
 
     // Connect
-    int try = 1;
-    while (try && servStruct->flag_run) {
-        if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
-                    sizeof(servidorAddr)) < 0) {
-            servStruct->tipo_mensagem = 2;
-            sleep(1);
-        } else {
-            servStruct->tipo_mensagem = 3;
-            try = 0;
-        }
+    if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
+                sizeof(servidorAddr)) < 0) {
+        servStruct->tipo_mensagem = 2;
+    } else {
+        servStruct->tipo_mensagem = 3;
     }
 
     // Enviar Mensagem
@@ -75,7 +70,7 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
             // printf("Começou com 1\n");
             sinalRecebido = buffer[0];
             // printf("[%s]\n", buffer);
-        } 
+        }
         // else {
         //     // printf("Não recebeu o total de bytes enviados\n");
         //     // printf("[%s]\n", buffer);
@@ -112,7 +107,8 @@ void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos) {
 
     // Enviar Mensagem
     if (send(clienteSocket, mensagem, tamanhoMensagem, 0) != tamanhoMensagem)
-        printf("Erro no envio: numero de bytes enviados diferente do esperado\n");
+        printf(
+            "Erro no envio: numero de bytes enviados diferente do esperado\n");
 
     char sinalRecebido = '0';
 

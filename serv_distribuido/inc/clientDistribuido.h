@@ -14,7 +14,7 @@ void monta_cliente();
 
 void envia_mensagem_central(char cod_sinal, char pos, int estado_sinal);
 
-void envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct);
+void envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct, int *flag_done);
 
 void fecha_cliente();
 
