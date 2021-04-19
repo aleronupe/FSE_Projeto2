@@ -3,8 +3,8 @@
 int servidorSocket;
 int socketCliente;
 
-void ativaDesativaAlarme(Servidor_Struct *servStruct, char sinalSensor){
-    if(servStruct->alarme && sinalSensor == '1'){
+void ativaDesativaAlarme(Servidor_Struct *servStruct, char sinalSensor) {
+    if (servStruct->alarme && sinalSensor == '1') {
         servStruct->sinalAlarme = 0;
     }
 }
@@ -92,17 +92,17 @@ void monta_servidor(void *args) {
 
     while (servStruct->flag_run) {
         clienteLength = sizeof(clienteAddr);
-        // printf("Pronto para Aceitar cliente\n");
+        printf("Pronto para Aceitar cliente\n");
         strcpy(servStruct->mensagem, "Pronto para;Aceitar cliente;");
         servStruct->tipo_mensagem = 5;
         if ((socketCliente =
                  accept(servidorSocket, (struct sockaddr *)&clienteAddr,
                         &clienteLength)) < 0) {
-            // printf("Falha no Accept\n");
+            printf("Falha no Accept\n");
             strcpy(servStruct->mensagem, "Falha no;Accept");
             servStruct->tipo_mensagem = 5;
         } else {
-            // printf("Conexão estabelecida\n");
+            printf("Conexão do Cliente: %s\n", inet_ntoa(clienteAddr.sin_addr));
             char aviso[40];
             sprintf(aviso, "Conexão do ;Cliente;%s",
                     inet_ntoa(clienteAddr.sin_addr));
