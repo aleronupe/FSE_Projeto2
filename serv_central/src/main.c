@@ -17,8 +17,7 @@ pthread_t menu_tid;
 pthread_t server_tid;
 
 void mata_threads() {
-    strcpy(servStruct.mensagem, "Matou o;processo; ");
-    servStruct.tipo_mensagem = 5;
+    servStruct.tipo_mensagem = 9;
     servStruct.flag_run = 0;
     sleep(1);
     desliga_telas();
@@ -56,7 +55,6 @@ int main(int argc, const char *argv[]) {
     servStruct.sensorAbrt4 = 0;
     servStruct.sensorAbrt5 = 0;
     servStruct.sensorAbrt6 = 0;
-    strcpy(servStruct.mensagem, "Estado Inicial");
     servStruct.tipo_mensagem = 1;
 
     iniciaTela();

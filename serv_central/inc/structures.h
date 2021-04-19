@@ -11,7 +11,6 @@ typedef struct servidor_struct
     int sensorAbrt4, sensorAbrt5, sensorAbrt6;
     int alarme, sinalAlarme;
     float temp, hum;
-    char mensagem[150];
     char tipo_mensagem;
 
 } Servidor_Struct;

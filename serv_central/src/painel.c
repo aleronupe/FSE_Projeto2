@@ -265,7 +265,7 @@ void atualizaInput(Servidor_Struct *servStruct) {
                         servStruct->alarme = servStruct->alarme ? 0 : 1;
                         estadoEntradas[6] = estadoEntradas[6] ? 0 : 1;
                         escreve_csv(servStruct->alarme, "Alarme", "2");
-                     break;
+                        break;
                     case 7:
                         servStruct->flag_run = 0;
                         break;
@@ -295,18 +295,58 @@ void atualizaInput(Servidor_Struct *servStruct) {
 void atualizaMensagem(Servidor_Struct *servStruct) {
     box(windowMensagens, 0, 0);
     mvwprintw(windowMensagens, 0, 6, " Mensagens ");
-    char *token = {"Mensagem inicial propositadamente longa para posteriores"};
-    token = strtok(servStruct->mensagem, ";");
 
-    int cont = 0;
-
-    wattron(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem));
-    while (token != NULL) {
-        mvwprintw(windowMensagens, 3 + cont, 2, "%-22s", token);
-        cont += 1;
-        token = strtok(NULL, ";");
+    switch (servStruct->tipo_mensagem) {
+        case 1:
+            wattron(windowMensagens, COLOR_PAIR(1));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Estado");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Inicial");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(1));
+            break;
+        case 2:
+            wattron(windowMensagens, COLOR_PAIR(2));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Aguardando");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Servidor");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", "Distribuido");
+            wattroff(windowMensagens, COLOR_PAIR(2));
+            break;
+        case 3:
+            wattron(windowMensagens, COLOR_PAIR(1));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Conexão");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Estabelecida");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(1));
+            break;
+        case 4:
+            wattron(windowMensagens, COLOR_PAIR(2));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Pronto para");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Aceitar cliente");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(2));
+            break;
+        case 5:
+            wattron(windowMensagens, COLOR_PAIR(5));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Falha no");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Accept");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(5));
+            break;
+        case 6:
+            wattron(windowMensagens, COLOR_PAIR(1));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Conexão");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Estabelecida");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", "Com Cliente ");
+            wattroff(windowMensagens, COLOR_PAIR(1));
+            break;
+        case 9:
+            wattron(windowMensagens, COLOR_PAIR(5));
+            mvwprintw(windowMensagens, 3, 2, "%-22s", "Matou o");
+            mvwprintw(windowMensagens, 4, 2, "%-22s", "Processo");
+            mvwprintw(windowMensagens, 5, 2, "%-22s", " ");
+            wattroff(windowMensagens, COLOR_PAIR(5));
+            break;
     }
-    wattroff(windowMensagens, COLOR_PAIR(servStruct->tipo_mensagem));
 
     wrefresh(windowMensagens);
 }
