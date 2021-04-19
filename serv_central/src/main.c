@@ -58,13 +58,13 @@ int main(int argc, const char *argv[]) {
     iniciaTela();
     monta_cliente();
 
-    pthread_t menu_tid;
+    // pthread_t menu_tid;
     pthread_t server_tid;
 
-    // printf("COmeçou");
+    printf("Começou");
 
-    pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void
-    *)&servStruct);
+    // pthread_create(&menu_tid, NULL, (void *)carregaMenu, (void
+    // *)&servStruct);
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&servStruct);
 
@@ -83,7 +83,7 @@ int main(int argc, const char *argv[]) {
         // printf("servStruct.sensorAbrt6: %d\n", servStruct.sensorAbrt6);
     }
 
-    pthread_join(menu_tid, NULL);
+    // pthread_join(menu_tid, NULL);
     pthread_join(server_tid, NULL);
 
     mata_threads();

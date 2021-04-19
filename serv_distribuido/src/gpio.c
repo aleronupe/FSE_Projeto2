@@ -21,7 +21,7 @@
 
 void read_sensors_init(char *message) {
     int estado;
-    char estadoTxt[2];
+    char estadoTxt[5];
     strcpy(message, "F;");
     
     estado = digitalRead(PIN_PRES_01);
