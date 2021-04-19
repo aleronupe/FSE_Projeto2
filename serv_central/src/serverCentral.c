@@ -3,8 +3,8 @@
 int servidorSocket;
 int socketCliente;
 
-void ativaDesativaAlarme(Servidor_Struct *servStruct, char sinalSensor) {
-    if (servStruct->alarme && sinalSensor == '1') {
+void ativaDesativaAlarme(Servidor_Struct *servStruct, int sinalSensor) {
+    if (servStruct->alarme && sinalSensor) {
         servStruct->sinalAlarme = 1;
         servStruct->tipo_mensagem = 8;
     }
@@ -32,7 +32,7 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     servStruct->sensorPres2 = (buffer[2] == '1') ? 1 : 0;
                     break;
             }
-            ativaDesativaAlarme(servStruct, buffer[2]);
+            ativaDesativaAlarme(servStruct, '0' - buffer[2]);
             break;
         case 'A':
             switch (buffer[1]) {
@@ -55,7 +55,7 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     servStruct->sensorAbrt6 = (buffer[2] == '1') ? 1 : 0;
                     break;
             }
-            ativaDesativaAlarme(servStruct, buffer[2]);
+            ativaDesativaAlarme(servStruct, '0' - buffer[2]);
             break;
         case 'F':
             token = strtok(buffer, ";");
@@ -63,34 +63,42 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorPres1 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorPres2 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt1 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt2 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt3 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt4 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt5 = value;
+            ativaDesativaAlarme(servStruct, value);
 
             token = strtok(NULL, ";");
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt6 = value;
+            ativaDesativaAlarme(servStruct, value);
             break;
     }
 
@@ -136,11 +144,12 @@ void monta_servidor(void *args) {
                         &clienteLength)) < 0) {
             // printf("Falha no Accept\n");
             servStruct->tipo_mensagem = 5;
-        } else {
-            // printf("Conexão do Cliente: %s\n",
-            // inet_ntoa(clienteAddr.sin_addr));
-            servStruct->tipo_mensagem = 6;
-        }
+        } 
+        // else {
+        //     // printf("Conexão do Cliente: %s\n",
+        //     // inet_ntoa(clienteAddr.sin_addr));
+        //     servStruct->tipo_mensagem = 6;
+        // }
 
         TrataClienteTCP(socketCliente, servStruct);
         close(socketCliente);
