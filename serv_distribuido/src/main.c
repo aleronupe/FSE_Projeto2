@@ -29,7 +29,7 @@ void mata_threads() {
 int main(int argc, const char *argv[]) {
     signal(SIGINT, mata_threads);
     signal(SIGKILL, mata_threads);
-    signal(SIGPIPE, mata_threads);
+    signal(SIGPIPE, SIG_IGN);
 
     inicializa_dados(&main_struct);
     inicia_conexoes();

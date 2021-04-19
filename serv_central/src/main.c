@@ -31,7 +31,7 @@ void mata_threads() {
 int main(int argc, const char *argv[]) {
     signal(SIGINT, mata_threads);
     signal(SIGKILL, mata_threads);
-    signal(SIGPIPE, NULL);
+    signal(SIGPIPE, SIG_IGN);
 
     servStruct.flag_run = 1;
     servStruct.lamp1 = 0;
