@@ -47,5 +47,4 @@ void fecha_conexoes() {
     desativa_circuito_de_potencia();
     printf("Finalizado!\n");
     printf("Tchau!\n");
-    exit(0);
 }
