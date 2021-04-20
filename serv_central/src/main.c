@@ -81,10 +81,10 @@ int main(int argc, const char *argv[]) {
         usleep(500000);
     }
 
+    mata_threads();
+
     pthread_join(menu_tid, NULL);
     pthread_join(server_tid, NULL);
-
-    mata_threads();
 
     return 0;
 }
