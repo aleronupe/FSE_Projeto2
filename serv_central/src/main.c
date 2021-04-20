@@ -11,10 +11,12 @@
 #include "painel.h"
 #include "serverCentral.h"
 #include "structures.h"
+#include "alarm.h"
 
 Servidor_Struct servStruct;
 pthread_t menu_tid;
 pthread_t server_tid;
+pthread_t alarm_tid;
 
 void mata_threads() {
     servStruct.tipo_mensagem = 9;
@@ -22,9 +24,12 @@ void mata_threads() {
     sleep(1);
     desliga_telas();
     fecha_conexoes_TCP();
+    sleep(1);
     fecha_cliente();
+    sleep(1);
     pthread_cancel(menu_tid);
     pthread_cancel(server_tid);
+    pthread_cancel(alarm_tid);
     exit(0);
 }
 
@@ -68,6 +73,9 @@ int main(int argc, const char *argv[]) {
     pthread_detach(server_tid);
 
     abre_ou_cria_csv();
+
+    define_alarme(&servStruct, &alarm_tid);
+
     while (servStruct.flag_run == 1) {
         requisita_temperatura(&servStruct);
         usleep(500000);
