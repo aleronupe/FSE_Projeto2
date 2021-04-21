@@ -7,8 +7,6 @@
 #include <string.h>
 #include <pthread.h>
 
-#include "structuresCentral.h"
-
 #include "alarm.h"
 #include "clientCentral.h"
 #include "painel.h"

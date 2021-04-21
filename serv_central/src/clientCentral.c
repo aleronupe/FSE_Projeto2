@@ -15,7 +15,7 @@ void monta_cliente() {
     servidorAddr.sin_port = htons(servidorPorta);
 }
 
-void *requisita_temperatura(Servidor_Struct *servStruct) {
+void requisita_temperatura(Servidor_Struct *servStruct) {
     char buffer[30];
     unsigned int tamanhoMensagem;
     char mensagem[15];
@@ -35,7 +35,6 @@ void *requisita_temperatura(Servidor_Struct *servStruct) {
     if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
                 sizeof(servidorAddr)) < 0) {
         servStruct->tipo_mensagem = 2;
-        return NULL;
     } else {
         servStruct->tipo_mensagem = 3;
     }
@@ -62,12 +61,11 @@ void *requisita_temperatura(Servidor_Struct *servStruct) {
         } else if (buffer[0] == '1') {
             sinalRecebido = buffer[0];
         }
-        sleep(2);
+        sleep(1);
     }
 
     // Fechar Conexão
     close(clienteTempSocket);
-    return NULL;
 }
 
 void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos) {
