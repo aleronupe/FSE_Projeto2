@@ -9,6 +9,7 @@
 #include <unistd.h>
 
 #include "structuresCentral.h"
+#include "quit.h"
 
 #define SERV_PORT 10010
 

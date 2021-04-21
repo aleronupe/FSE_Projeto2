@@ -42,6 +42,8 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     liga_desliga_lamp_4(servStruct->lamp4);
                     break;
             }
+            if (send(socketCliente, envio, 30, 0) != 30)
+                printf("Erro no envio - send()\n");
             break;
         case 'A':
             switch (buffer[2]) {
@@ -54,6 +56,8 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     liga_desliga_ar_2(servStruct->ar2);
                     break;
             }
+            if (send(socketCliente, envio, 30, 0) != 30)
+                printf("Erro no envio - send()\n");
             break;
         case 'T':
             le_temp_e_umid(&temp, &hum);
@@ -67,12 +71,13 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             if (send(socketCliente, envio_temp_hum, 30, 0) < 0)
                 printf("Erro no envio de 'T' - send()\n");
             usleep(200000);
-
+            if (send(socketCliente, envio, 30, 0) != 30)
+                printf("Erro no envio - send()\n");
+            break;
+        case 'E':
+            mata_threads_sem_chamar();
             break;
     }
-
-    if (send(socketCliente, envio, 30, 0) != 30)
-        printf("Erro no envio - send()\n");
 
     printf("Finaliza recepção de dados do cliente\n");
 }
