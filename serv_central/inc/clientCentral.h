@@ -8,7 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "structures.h"
+#include "structuresCentral.h"
 
 void monta_cliente();
 

@@ -8,11 +8,11 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "structures.h"
+#include "structuresCentral.h"
 
 #define SERV_PORT 10010
 
-void monta_servidor(void *args);
+void *monta_servidor(void *args);
 
 void fecha_conexoes_TCP();
 

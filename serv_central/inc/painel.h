@@ -9,9 +9,10 @@
 #include <pthread.h>
 
 #include "serverCentral.h"
-#include "structures.h"
+#include "structuresCentral.h"
 #include "clientCentral.h"
 #include "csv.h"
+#include "quit.h"
 
 void iniciaTela();
 

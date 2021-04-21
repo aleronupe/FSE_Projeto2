@@ -270,6 +270,8 @@ void atualizaInput(Servidor_Struct *servStruct) {
                         break;
                     case 7:
                         servStruct->flag_run = 0;
+                        sleep(1);
+                        mata_threads();
                         break;
                     default:
                         break;

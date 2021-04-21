@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#include "structures.h"
+#include "structuresCentral.h"
 
 void define_alarme(Servidor_Struct *servStruct, pthread_t *alarm_tid);
 

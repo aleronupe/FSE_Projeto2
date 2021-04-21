@@ -1,5 +1,5 @@
-#ifndef STRUCUTRES_H_
-#define STRUCUTRES_H_
+#ifndef STRUCUTRES_CENTRAL_H_
+#define STRUCUTRES_CENTRAL_H_
 
 typedef struct servidor_struct
 {
@@ -15,4 +15,6 @@ typedef struct servidor_struct
 
 } Servidor_Struct;
 
-#endif /* STRUCUTRES_H_ */
+void inicializa_dados(Servidor_Struct *servStruct);
+
+#endif /* STRUCUTRES_CENTRAL_H_ */
