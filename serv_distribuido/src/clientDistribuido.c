@@ -56,7 +56,7 @@ void envia_mensagem_central(char cod_sinal, char pos, int estado_sinal) {
     close(clienteSocket);
 }
 
-void envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
+void *envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
                             int *flag_done) {
     char buffer[30];
     unsigned int tamanhoMensagem;
@@ -71,7 +71,6 @@ void envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
         printf("Erro no socket()\n");
 
     // Connect
-
     if (connect(clienteInitialSocket, (struct sockaddr *)&servidorAddr,
                 sizeof(servidorAddr)) < 0) {
         printf("Não conectou ao servidor inicial\n");
@@ -79,6 +78,7 @@ void envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
     } else {
         printf("Conexão Estabelecida\n");
         *flag_done = 0;
+        return NULL;
     }
 
     // Enviar Mensagem
@@ -100,6 +100,7 @@ void envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
 
     // Fechar Conexão
     close(clienteInitialSocket);
+    return NULL;
 }
 
 void fecha_cliente() {
