@@ -34,8 +34,6 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     break;
             }
             ativaDesativaAlarme(servStruct, '0' - buffer[2]);
-            if (send(socketCliente, envio, 30, 0) != 30)
-                printf("Erro no envio - send()\n");
             break;
         case 'A':
             switch (buffer[1]) {
@@ -59,8 +57,6 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
                     break;
             }
             ativaDesativaAlarme(servStruct, '0' - buffer[2]);
-            if (send(socketCliente, envio, 30, 0) != 30)
-                printf("Erro no envio - send()\n");
             break;
         case 'F':
             token = strtok(buffer, ";");
@@ -104,14 +100,11 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
             sscanf(token, "%d", &value);
             servStruct->sensorAbrt6 = value;
             ativaDesativaAlarme(servStruct, value);
-
-            if (send(socketCliente, envio, 30, 0) != 30)
-                printf("Erro no envio - send()\n");
-            break;
-        case 'E':
-            mata_threads_sem_chamar();
             break;
     }
+
+    if (send(socketCliente, envio, 30, 0) != 30)
+        printf("Erro no envio - send()\n");
 
     // printf("Finaliza recepção de dados do cliente\n");
 }

@@ -14,23 +14,6 @@ void handle_quit(pthread_t *menu_tid, pthread_t *server_tid,
 }
 
 void mata_threads() {
-    if (local_servStruct->conectado)
-        envia_mensagem_distribuido('E', 0, 'E');
-    sleep(1);
-    local_servStruct->tipo_mensagem = 9;
-    local_servStruct->flag_run = 0;
-    desliga_telas();
-    fecha_conexoes_TCP();
-    sleep(1);
-    fecha_cliente();
-    sleep(1);
-    pthread_cancel(*local_menu_tid);
-    pthread_cancel(*local_server_tid);
-    pthread_cancel(*local_alarm_tid);
-    exit(0);
-}
-
-void mata_threads_sem_chamar() {
     sleep(1);
     local_servStruct->tipo_mensagem = 9;
     local_servStruct->flag_run = 0;

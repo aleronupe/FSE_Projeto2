@@ -97,7 +97,6 @@ void *envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
         sinalRecebido = buffer[0];
         sleep(2);
     }
-    servStruct->conectado = 1;
     // Fechar Conexão
     close(clienteInitialSocket);
     return NULL;

@@ -18,6 +18,4 @@ void handle_quit(pthread_t *server_tid, Servidor_Struct *main_struct);
 
 void mata_threads();
 
-void mata_threads_sem_chamar();
-
 #endif /* QUIT_DIST_H_ */

@@ -20,6 +20,4 @@ void handle_quit(pthread_t *menu_tid, pthread_t *server_tid,
 
 void mata_threads();
 
-void mata_threads_sem_chamar();
-
 #endif /* QUIT_H_ */
