@@ -21,4 +21,5 @@ void inicializa_dados(Servidor_Struct *main_struct){
     main_struct->sensorAbrt4 = 0;
     main_struct->sensorAbrt5 = 0;
     main_struct->sensorAbrt6 = 0;
+    main_struct->conectado = 0;
 }

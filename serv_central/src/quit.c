@@ -14,7 +14,8 @@ void handle_quit(pthread_t *menu_tid, pthread_t *server_tid,
 }
 
 void mata_threads() {
-    envia_mensagem_distribuido('E', 0, 'E');
+    if (local_servStruct->conectado)
+        envia_mensagem_distribuido('E', 0, 'E');
     sleep(1);
     local_servStruct->tipo_mensagem = 9;
     local_servStruct->flag_run = 0;
@@ -29,7 +30,7 @@ void mata_threads() {
     exit(0);
 }
 
-void mata_threads_sem_chamar(){
+void mata_threads_sem_chamar() {
     sleep(1);
     local_servStruct->tipo_mensagem = 9;
     local_servStruct->flag_run = 0;

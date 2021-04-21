@@ -65,6 +65,8 @@ void *requisita_temperatura(Servidor_Struct *servStruct) {
         sleep(2);
     }
 
+    if (!servStruct->conectado) servStruct->conectado = 1;
+
     // Fechar Conexão
     close(clienteTempSocket);
     return NULL;

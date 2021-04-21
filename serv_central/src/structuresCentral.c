@@ -24,4 +24,5 @@ void inicializa_dados(Servidor_Struct *servStruct) {
     servStruct->sensorAbrt5 = 0;
     servStruct->sensorAbrt6 = 0;
     servStruct->tipo_mensagem = 1;
+    servStruct->conectado = 0;
 }

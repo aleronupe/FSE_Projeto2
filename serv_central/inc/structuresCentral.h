@@ -12,6 +12,7 @@ typedef struct servidor_struct
     int alarme, sinalAlarme;
     float temp, hum;
     char tipo_mensagem;
+    int conectado;
 
 } Servidor_Struct;
 
