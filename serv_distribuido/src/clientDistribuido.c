@@ -75,10 +75,10 @@ void *envia_mensagem_inicial(char *initial_message, Servidor_Struct *servStruct,
                 sizeof(servidorAddr)) < 0) {
         printf("Não conectou ao servidor inicial\n");
         sleep(1);
+        return NULL;
     } else {
         printf("Conexão Estabelecida\n");
         *flag_done = 0;
-        return NULL;
     }
 
     // Enviar Mensagem
