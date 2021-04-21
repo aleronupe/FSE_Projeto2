@@ -2,7 +2,6 @@
 
 int servidorSocket;
 int socketCliente;
-int retry = 0;
 
 void ativaDesativaAlarme(Servidor_Struct *servStruct, int sinalSensor) {
     if (servStruct->alarme && sinalSensor) {
@@ -118,30 +117,22 @@ void *monta_servidor(void *args) {
 
     servidorPorta = SERV_PORT;
 
-    while (retry < 5) {
-        // Abrir Socket
-        if ((servidorSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-            printf("falha no socker do Servidor\n");
+    // Abrir Socket
+    if ((servidorSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+        printf("falha no socker do Servidor\n");
 
-        // Montar a estrutura sockaddr_in
-        memset(&servidorAddr, 0,
-               sizeof(servidorAddr));  // Zerando a estrutura de dados
-        servidorAddr.sin_family = AF_INET;
-        servidorAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-        servidorAddr.sin_port = htons(servidorPorta);
+    // Montar a estrutura sockaddr_in
+    memset(&servidorAddr, 0,
+           sizeof(servidorAddr));  // Zerando a estrutura de dados
+    servidorAddr.sin_family = AF_INET;
+    servidorAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servidorAddr.sin_port = htons(servidorPorta);
 
-        // Bind
-        int res_bind = 0;
-        if ((res_bind = bind(servidorSocket, (struct sockaddr *)&servidorAddr,
-                             sizeof(servidorAddr))) < 0) {
-            printf("Falha no Bind: %d\n", res_bind);
-            retry++;
-        } else {
-            retry = 10;
-        }
-    }
-    if (retry == 5) {
-        return NULL;
+    // Bind
+    int res_bind = 0;
+    if ((res_bind = bind(servidorSocket, (struct sockaddr *)&servidorAddr,
+                         sizeof(servidorAddr))) < 0) {
+        printf("Falha no Bind: %d\n", res_bind);
     }
 
     // Listen
