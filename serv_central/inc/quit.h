@@ -13,8 +13,7 @@
 #include "serverCentral.h"
 #include "structuresCentral.h"
 
-void handle_quit(pthread_t *menu_tid, pthread_t *server_tid,
-                 pthread_t *alarm_tid, Servidor_Struct *servStruct);
+void handle_quit(pthread_t *menu_tid, pthread_t *server_tid, Servidor_Struct *servStruct);
 
 void mata_threads();
 

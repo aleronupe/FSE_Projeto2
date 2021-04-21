@@ -20,7 +20,7 @@ pthread_t server_tid;
 pthread_t alarm_tid;
 
 int main(int argc, const char *argv[]) {
-    handle_quit(&menu_tid, &server_tid, &alarm_tid, &servStruct);
+    handle_quit(&menu_tid, &server_tid, &servStruct);
 
     signal(SIGINT, mata_threads);
     signal(SIGKILL, mata_threads);
@@ -40,15 +40,16 @@ int main(int argc, const char *argv[]) {
 
     abre_ou_cria_csv();
 
-    define_alarme(&servStruct, &alarm_tid);
-
     while (servStruct.flag_run == 1) {
         requisita_temperatura(&servStruct);
         usleep(500000);
+        if (servStruct.sinalAlarme) {
+            system("cd ..; omxplayer alert.mp3 > /dev/null");
+        }
     }
 
-    //pthread_join(menu_tid, NULL);
-    //pthread_join(server_tid, NULL);
+    // pthread_join(menu_tid, NULL);
+    // pthread_join(server_tid, NULL);
 
     mata_threads();
     return 0;
