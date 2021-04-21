@@ -101,7 +101,6 @@ void *monta_servidor(void *args) {
     if ((res_bind = bind(servidorSocket, (struct sockaddr *)&servidorAddr,
                          sizeof(servidorAddr))) < 0) {
         printf("Falha no Bind: %d\n", res_bind);
-        retry++;
     }
 
     // Listen
