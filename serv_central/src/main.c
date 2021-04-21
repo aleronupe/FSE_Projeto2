@@ -35,8 +35,8 @@ int main(int argc, const char *argv[]) {
     pthread_create(&server_tid, NULL, (void *)monta_servidor,
                    (void *)&servStruct);
 
-    // pthread_detach(menu_tid);
-    // pthread_detach(server_tid);
+    pthread_detach(menu_tid);
+    pthread_detach(server_tid);
 
     abre_ou_cria_csv();
 
@@ -47,8 +47,8 @@ int main(int argc, const char *argv[]) {
         usleep(500000);
     }
 
-    pthread_join(menu_tid, NULL);
-    pthread_join(server_tid, NULL);
+    //pthread_join(menu_tid, NULL);
+    //pthread_join(server_tid, NULL);
 
     mata_threads();
     return 0;
