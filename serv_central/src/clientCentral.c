@@ -35,9 +35,9 @@ void *requisita_temperatura(Servidor_Struct *servStruct) {
     if (connect(clienteTempSocket, (struct sockaddr *)&servidorAddr,
                 sizeof(servidorAddr)) < 0) {
         servStruct->tipo_mensagem = 2;
+        return NULL;
     } else {
         servStruct->tipo_mensagem = 3;
-        return NULL;
     }
 
     // Enviar Mensagem
