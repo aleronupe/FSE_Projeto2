@@ -14,7 +14,7 @@ void monta_cliente();
 
 void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos);
 
-void requisita_temperatura(Servidor_Struct *servStruct);
+void *requisita_temperatura(Servidor_Struct *servStruct);
 
 void fecha_cliente();
 

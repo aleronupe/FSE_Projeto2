@@ -15,7 +15,7 @@ void monta_cliente() {
     servidorAddr.sin_port = htons(servidorPorta);
 }
 
-void requisita_temperatura(Servidor_Struct *servStruct) {
+void *requisita_temperatura(Servidor_Struct *servStruct) {
     char buffer[30];
     unsigned int tamanhoMensagem;
     char mensagem[15];
@@ -37,6 +37,7 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
         servStruct->tipo_mensagem = 2;
     } else {
         servStruct->tipo_mensagem = 3;
+        return NULL;
     }
 
     // Enviar Mensagem
@@ -66,6 +67,7 @@ void requisita_temperatura(Servidor_Struct *servStruct) {
 
     // Fechar Conexão
     close(clienteTempSocket);
+    return NULL;
 }
 
 void envia_mensagem_distribuido(char cod_sinal, int estado_sinal, char pos) {
