@@ -76,7 +76,7 @@ void TrataClienteTCP(int socketCliente, Servidor_Struct *servStruct) {
     printf("Finaliza recepção de dados do cliente\n");
 }
 
-void *monta_servidor(void *args) {
+void monta_servidor(void *args) {
     Servidor_Struct *servStruct = (Servidor_Struct *)args;
     struct sockaddr_in servidorAddr;
     struct sockaddr_in clienteAddr;
@@ -123,7 +123,6 @@ void *monta_servidor(void *args) {
         close(socketCliente);
     }
     close(servidorSocket);
-    return NULL;
 }
 
 void fecha_conexoes_TCP() {

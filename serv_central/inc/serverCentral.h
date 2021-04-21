@@ -13,7 +13,7 @@
 
 #define SERV_PORT 10010
 
-void *monta_servidor(void *args);
+void monta_servidor(void *args);
 
 void fecha_conexoes_TCP();
 
