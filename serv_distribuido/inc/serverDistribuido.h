@@ -12,6 +12,7 @@
 #include "gpio.h"
 #include "bme280.h"
 #include "control.h"
+#include "quitDist.h"
 
 #define SERV_PORT 10110
 

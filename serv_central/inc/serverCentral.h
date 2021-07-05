@@ -8,7 +8,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "structures.h"
+#include "structuresCentral.h"
+#include "quit.h"
 
 #define SERV_PORT 10010
 

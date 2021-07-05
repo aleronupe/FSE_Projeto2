@@ -129,9 +129,11 @@ void monta_servidor(void *args) {
     servidorAddr.sin_port = htons(servidorPorta);
 
     // Bind
-    if (bind(servidorSocket, (struct sockaddr *)&servidorAddr,
-             sizeof(servidorAddr)) < 0)
-        printf("Falha no Bind\n");
+    int res_bind = 0;
+    if ((res_bind = bind(servidorSocket, (struct sockaddr *)&servidorAddr,
+                         sizeof(servidorAddr))) < 0) {
+        printf("Falha no Bind: %d\n", res_bind);
+    }
 
     // Listen
     if (listen(servidorSocket, 1) < 0) printf("Falha no Listen\n");
@@ -144,7 +146,7 @@ void monta_servidor(void *args) {
                         &clienteLength)) < 0) {
             // printf("Falha no Accept\n");
             servStruct->tipo_mensagem = 5;
-        } 
+        }
         // else {
         //     // printf("Conexão do Cliente: %s\n",
         //     // inet_ntoa(clienteAddr.sin_addr));
